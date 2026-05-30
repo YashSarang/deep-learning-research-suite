@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #1e40af;
+    --text-color: #1f2937;
+    --bg-color: #ffffff;
+    --border-color: #e5e7eb;
+    --heading-color: #111827;
+}
+
+body {
+    font-family: 'Lora', serif;
+    font-size: 11pt;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    margin: 20pt; /* Reduced Page margins */
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Inter', sans-serif;
+    color: var(--heading-color);
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+}
+
+h1 { font-size: 24pt; border-bottom: 2pt solid var(--primary-color); padding-bottom: 10pt; text-align: center; }
+h2 { font-size: 18pt; color: var(--primary-color); border-bottom: 1pt solid var(--border-color); padding-bottom: 5pt; }
+h3 { font-size: 14pt; font-weight: 600; }
+
+hr {
+    border: 0;
+    border-top: 1pt solid var(--border-color);
+    margin: 30pt 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20pt 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+}
+
+th {
+    background-color: #f9fafb;
+    color: #4b5563;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2pt solid var(--border-color);
+}
+
+th, td {
+    padding: 12pt;
+    text-align: left;
+    border-bottom: 1pt solid var(--border-color);
+}
+
+tr:nth-child(even) {
+    background-color: #fdfdfd;
+}
+
+tr:hover {
+    background-color: #f3f4f6;
+}
+
+strong {
+    color: var(--secondary-color);
+}
+
+img {
+    display: block;
+    max-width: 80%;
+    height: auto;
+    margin: 30pt auto;
+    border-radius: 8pt;
+    box-shadow: 0 4pt 6pt -1pt rgba(0, 0, 0, 0.1), 0 2pt 4pt -1pt rgba(0, 0, 0, 0.06);
+}
+
+blockquote {
+    border-left: 4pt solid var(--primary-color);
+    padding: 10pt 20pt;
+    background-color: #eff6ff;
+    margin: 20pt 0;
+    font-style: italic;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f3f4f6;
+    padding: 2pt 4pt;
+    border-radius: 4pt;
+    font-size: 9pt;
+}
+
+/* Page Break before major sections */
+h2 {
+    page-break-before: always;
+}
+
+h1 + h2 {
+    page-break-before: avoid; /* Don't break after Title */
+}
+
+/* Center student placeholders */
+p:has(strong) {
+    text-align: center;
+}
+
+ul {
+    list-style-type: square;
+    margin-left: 20pt;
+}
+
+/* Table numbering would be nice but CSS is limited here without counters */

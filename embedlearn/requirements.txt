@@ -1,0 +1,11 @@
+numpy>=1.23
+scipy>=1.9
+scikit-learn>=1.2
+matplotlib>=3.7
+
+datasets==3.6.0
+
+torch>=2.0
+
+sklearn-crfsuite>=0.3.6
+python-crfsuite>=0.9.9

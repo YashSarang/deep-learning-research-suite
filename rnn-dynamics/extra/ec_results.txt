@@ -1,0 +1,4 @@
+EC1.log: Done. solved=0 steps=49999 best_valid_error=73.7600%
+EC2.log: Done. solved=0 steps=49999 best_valid_error=73.8200%
+EC3.log: Done. solved=0 steps=49999 best_valid_error=73.7800%
+EC4.log: Done. solved=0 steps=49999 best_valid_error=73.8900%

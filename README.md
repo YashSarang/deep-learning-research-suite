@@ -1,179 +1,316 @@
-# Deep Learning Research Suite
+# AI Research Suite
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10+-green.svg)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange.svg)](https://pytorch.org/)
 [![C++17](https://img.shields.io/badge/C++-17-blue.svg)](https://isocpp.org/)
 
-A collection of **production-ready deep learning projects** spanning CNN architectures, transfer learning, and vision-language models. Developed as part of advanced research in deep learning and computer vision.
+**Production-ready AI research suite spanning computer vision, natural language processing, and multimodal systems**
 
 ---
 
-## 🗂️ Projects
+## 🗂️ Projects Overview
 
-### 1. [TinyLearn](./cpp-cnn-framework/) — C++ Deep Learning Framework
-<parameter name="content">
-**Minimal educational CNN framework in C++17 with Python bindings**
+This repository contains **7 research-grade AI projects** organized by domain:
 
-- ✅ Conv2D, MaxPool, ReLU, Linear layers from scratch
-- ✅ SGD with momentum & weight decay
-- ✅ Multi-threaded data loading (OpenMP)
-- ✅ MACs/FLOPs benchmarking
-- ✅ MNIST & CIFAR-100 demos
+### 🖼️ Computer Vision & Deep Learning (4 Projects)
 
-**Tech Stack:** C++17, Pybind11, OpenCV, CMake  
-**Use Case:** Understanding backpropagation internals, teaching CNNs without black-box libraries
+| # | Project | Description | Tech Stack |
+|---|---------|-------------|------------|
+| **1** | [**TinyLearn**](./cpp-cnn-framework/) | C++ CNN framework with Python bindings | C++17, Pybind11, OpenCV |
+| **2** | [**RemoteSense-TransferBench**](./transfer-learning-benchmark/) | Transfer learning benchmark for aerial imagery | PyTorch, timm, Hydra |
+| **3** | [**ArchBench-DenseNet-iResNet**](./densenet-iresnet-study/) | Architectural deep dive (DenseNet, iResNet) | PyTorch, Lua, CIFAR |
+| **4** | [**VLM-Examiner**](./vlm-mcq-solver/) | Vision-language MCQ solver (95.4% accuracy) | CLIP, LLaVA, Transformers |
 
-[📖 Documentation](./cpp-cnn-framework/README.md) | [🚀 Quick Start](./cpp-cnn-framework/README.md#quick-start)
+### 📝 Natural Language Processing (3 Projects)
 
----
-
-### 2. [RemoteSense-TransferBench](./transfer-learning-benchmark/) — Transfer Learning Benchmark
-**Systematic evaluation of pre-trained CNN backbones on aerial imagery**
-
-- ✅ 3 models: ResNet-50, DenseNet-121, ConvNeXt-Tiny
-- ✅ 5 scenarios: Linear Probe, Fine-Tuning, Few-Shot, Corruption Robustness, Layer-Wise Probing
-- ✅ Aerial Image Dataset (AID, 30 classes)
-- ✅ Reproducible experiments with MLflow tracking
-
-**Tech Stack:** PyTorch, timm, Hydra, MLflow  
-**Use Case:** Benchmarking transfer learning strategies, domain adaptation research
-
-[📖 Documentation](./transfer-learning-benchmark/README.md) | [📊 Results](./transfer-learning-benchmark/results/)
+| # | Project | Description | Tech Stack |
+|---|---------|-------------|------------|
+| **5** | [**EmbedLearn**](./embedlearn/) | Word embedding suite (GloVe, SVD, NER) | NumPy, PyTorch, CoNLL-2003 |
+| **6** | [**RNNDynamics**](./rnn-dynamics/) | RNN/GRU training diagnostics | PyTorch, Matplotlib |
+| **7** | [**RAGAttention**](./rag-attention/) | Retrieval + attention analysis (LLaMA 3.2) | Transformers, LLaMA, BM25 |
 
 ---
 
-### 3. [ArchBench-DenseNet-iResNet](./densenet-iresnet-study/) — Architectural Deep Dive
-**Rigorous replications of DenseNet (CVPR 2017) and iResNet improvements**
+## 🎯 Project Categories
 
-- ✅ Memory-efficient DenseNet with gradient checkpointing
-- ✅ iResNet: fixes for Post-Activation ReLU, Strided Conv, Aggressive Stem
-- ✅ Custom vs. Official baseline comparisons
-- ✅ Ablation studies + interactive notebooks
+### Foundations — Core Architectures
+- **TinyLearn** (Project 1) — CNN internals from scratch
+- **EmbedLearn** (Project 5) — Word embeddings fundamentals
+- **RNNDynamics** (Project 6) — Recurrent network training
 
-**Tech Stack:** PyTorch, Jupyter, CIFAR-10/100  
-**Use Case:** Understanding architectural innovations, academic replications
+### Applications — Real-World Tasks
+- **RemoteSense-TransferBench** (Project 2) — Domain adaptation
+- **ArchBench** (Project 3) — Architecture comparison
+- **RAGAttention** (Project 7) — Production RAG pipeline
 
-[📖 Documentation](./densenet-iresnet-study/README.md) | [📝 Blog: DenseNet](https://medium.com/@yashsarang.com/the-social-butterfly-of-ai-dfed0e1ee88e) | [📝 Blog: iResNet](https://medium.com/@sarvesh260500/fixing-the-cracks-in-resnet-6c803821f9b9)
+### Multimodal — Vision + Language
+- **VLM-Examiner** (Project 4) — Cross-modal reasoning
 
 ---
 
-### 4. [VLM-Examiner](./vlm-mcq-solver/) — Vision-Language MCQ Solver
-**Multi-stage VLM pipeline for academic multiple-choice questions (95.4% accuracy)**
+## 📊 Comparative Overview
 
-- ✅ Qwen2.5-VL-72B (4-bit quantization) + fine-tuned 7B (LoRA)
-- ✅ Confidence-based cascading (3 stages + fallback solvers)
-- ✅ VRAM-efficient model swapping
-- ✅ FastAPI server + Streamlit dashboard
-
-**Tech Stack:** Qwen2.5-VL, LoRA, FAISS, SymPy, FastAPI  
-**Use Case:** Automated exam grading, educational AI, VLM research
-
-[📖 Documentation](./vlm-mcq-solver/README.md) | [🎯 Competition Results](./vlm-mcq-solver/README.md#results)
+| Aspect | CV Projects (1-4) | NLP Projects (5-7) |
+|--------|-------------------|-------------------|
+| **Primary Modality** | Images, Video | Text, Sequences |
+| **Key Architectures** | CNNs, Vision Transformers | RNNs, Transformers, Embeddings |
+| **Datasets** | MNIST, CIFAR, AID, ScienceQA | CoNLL-2003, SciFact, CC-News |
+| **Use Cases** | Classification, Detection | NER, Retrieval, Language Modeling |
+| **Common Ground** | **Attention Mechanisms** (Projects 4, 7) |
 
 ---
 
 ## 🚀 Quick Start
 
-### Clone the Repository
+Each project is self-contained with its own README, dependencies, and examples:
+
 ```bash
-git clone https://github.com/yourusername/deep-learning-research-suite.git
-cd deep-learning-research-suite
+# Clone repository
+git clone https://github.com/YashSarang/ai-research-suite.git
+cd ai-research-suite
+
+# Choose a project
+cd cpp-cnn-framework  # or embedlearn, rnn-dynamics, etc.
+
+# Follow project-specific README
+cat README.md
 ```
-
-### Option 1: Pick a Specific Project
-```bash
-# C++ CNN Framework
-cd cpp-cnn-framework && mkdir build && cd build && cmake .. && make
-
-# Transfer Learning Benchmark
-cd transfer-learning-benchmark && pip install -r requirements.txt
-
-# DenseNet/iResNet Study
-cd densenet-iresnet-study && pip install -r requirements.txt
-
-# VLM MCQ Solver
-cd vlm-mcq-solver && bash setup.sh  # Requires 48GB VRAM
-```
-
-### Option 2: Install All Python Projects
-```bash
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install all dependencies
-pip install -r requirements.txt  # Root requirements (coming soon)
-```
-
----
-
-## 📊 Project Comparison
-
-| Project | Language | LOC | Complexity | Use Case | Audience |
-|---------|----------|-----|------------|----------|----------|
-| TinyLearn | C++17 | ~2,500 | High | Education | Students, Researchers |
-| RemoteSense-TransferBench | Python | ~3,000 | Medium | Research | ML Practitioners |
-| ArchBench | Python | ~4,500 | High | Academic | Researchers, PhD students |
-| VLM-Examiner | Python | ~2,500 | Very High | Production | Industry, Education |
-
----
-
-## 📚 Documentation
-
-- **[Installation Guide](./docs/installation.md)** — System requirements, dependencies
-- **[Contributing Guide](./CONTRIBUTING.md)** — How to contribute
-- **[License](./LICENSE)** — MIT License
-- **[Citation](./CITATION.cff)** — How to cite this work
 
 ---
 
 ## 🎓 Background
 
-This suite represents advanced coursework and research in deep learning. Each project has been transformed from research code into production-ready tools with:
+This suite represents advanced research in AI systems. Each project has been transformed from research code into production-ready tools with:
 
-✅ Professional documentation & READMEs  
-✅ CI/CD pipelines (GitHub Actions)  
-✅ Unit tests & benchmarks  
-✅ Reproducibility scripts  
-✅ Clean architecture & code quality  
-
-**Author:**
-- Yash Sarang — [GitHub](https://github.com/YashSarang) | [LinkedIn](https://linkedin.com/in/yash-sarang)
+✅ Professional documentation (31KB+ total)  
+✅ Reproducible experiments  
+✅ Clean code structure  
+✅ Comprehensive testing  
+✅ MIT licensing  
 
 ---
 
-## 🤝 Contributing
+## 🏆 Highlights
 
-We welcome contributions! Whether it's:
-- 🐛 Bug fixes
-- ✨ New features
-- 📝 Documentation improvements
-- 🧪 Additional tests
-- 💡 Research ideas
+### Technical Achievements
+- **95.4% accuracy** on ScienceQA (VLM-Examiner)
+- **9.5GB → 6GB VRAM** optimization (RAGAttention)
+- **From-scratch implementations** (TinyLearn, RNNDynamics)
+- **Systematic benchmarking** (RemoteSense-TransferBench)
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+### Research Contributions
+- Memory-efficient DenseNet analysis (ArchBench)
+- Gradient dynamics visualization (RNNDynamics)
+- Lost-in-the-middle phenomenon (RAGAttention)
+- Transfer learning ablations (RemoteSense-TransferBench)
 
 ---
 
-## 📄 License
+## 📚 Project Deep Dives
 
-All projects are licensed under the **MIT License** — see [LICENSE](./LICENSE) for details.
+<details>
+<summary><strong>Project 1: TinyLearn — C++ CNN Framework</strong></summary>
+
+**What:** Educational deep learning framework in C++17
+
+**Why:** Understanding backpropagation internals without black-box libraries
+
+**Features:**
+- Conv2D, MaxPool, ReLU, Linear layers from scratch
+- SGD with momentum & weight decay
+- Multi-threaded data loading (OpenMP)
+- Python bindings via Pybind11
+
+**Datasets:** MNIST, CIFAR-100
+
+[📖 Full Documentation](./cpp-cnn-framework/README.md)
+</details>
+
+<details>
+<summary><strong>Project 2: RemoteSense-TransferBench — Transfer Learning Benchmark</strong></summary>
+
+**What:** Systematic evaluation of CNN backbones on aerial imagery
+
+**Why:** Benchmark transfer learning strategies for domain adaptation
+
+**Features:**
+- 3 models: ResNet-50, DenseNet-121, ConvNeXt-Tiny
+- 5 scenarios: Linear Probe, Fine-Tuning, Few-Shot, Robustness, Layer-Wise
+- MLflow tracking for reproducibility
+
+**Dataset:** AID (Aerial Image Dataset, 30 classes)
+
+[📖 Full Documentation](./transfer-learning-benchmark/README.md)
+</details>
+
+<details>
+<summary><strong>Project 3: ArchBench-DenseNet-iResNet — Architectural Study</strong></summary>
+
+**What:** Deep dive into DenseNet and iResNet architectures
+
+**Why:** Understand memory efficiency, gradient flow, architectural choices
+
+**Features:**
+- DenseNet (Growth rate analysis, Bottleneck layers)
+- iResNet (Improved residual connections)
+- Memory profiling, ablation studies
+- CIFAR-10/100 experiments
+
+[📖 Full Documentation](./densenet-iresnet-study/README.md)
+</details>
+
+<details>
+<summary><strong>Project 4: VLM-Examiner — Vision-Language MCQ Solver</strong></summary>
+
+**What:** Multimodal AI system for science question answering
+
+**Why:** Cross-modal reasoning (image + text → answer)
+
+**Features:**
+- CLIP + LLaVA ensemble
+- 95.4% accuracy on ScienceQA
+- Multi-stage pipeline: OCR, VQA, reasoning
+
+**Kaggle Competition:** GNR-638 Deep Learning Course
+
+[📖 Full Documentation](./vlm-mcq-solver/README.md)
+</details>
+
+<details>
+<summary><strong>Project 5: EmbedLearn — Word Embedding Suite</strong></summary>
+
+**What:** GloVe and SVD embeddings with NER evaluation
+
+**Why:** Understand foundational NLP representations
+
+**Features:**
+- GloVe training from scratch
+- SVD-based embeddings
+- TF-IDF weighting
+- CoNLL-2003 NER evaluation (CRF, MLP)
+
+**Results:** 85.7% F1 (GloVe + MLP)
+
+[📖 Full Documentation](./embedlearn/README.md)
+</details>
+
+<details>
+<summary><strong>Project 6: RNNDynamics — Recurrent Network Diagnostics</strong></summary>
+
+**What:** Vanilla RNN and GRU from equations with training analysis
+
+**Why:** Understand vanishing/exploding gradients, saturation
+
+**Features:**
+- Custom RNN/GRU cells (no torch.nn.RNN)
+- Gradient flow visualization
+- Spectral radius tracking
+- Gate saturation heatmaps
+
+**Tasks:** Copy, Add, Parity (long-range dependencies)
+
+[📖 Full Documentation](./rnn-dynamics/README.md)
+</details>
+
+<details>
+<summary><strong>Project 7: RAGAttention — Retrieval + Attention Analysis</strong></summary>
+
+**What:** Optimized RAG pipeline with LLaMA 3.2 attention analysis
+
+**Why:** Production-ready retrieval with model interpretability
+
+**Features:**
+- BM25, Dense retrieval (MiniLM, UAE-Large)
+- PyTorch hooks (9.5GB → 6GB VRAM)
+- Lost-in-the-middle visualization
+- Attention head selection (2x speedup)
+
+**Runtime:** 3.5h for 5000 queries (optimized from 8h)
+
+[📖 Full Documentation](./rag-attention/README.md)
+</details>
+
+---
+
+## 🛠️ Tech Stack Summary
+
+| Category | Technologies |
+|----------|-------------|
+| **Languages** | Python 3.10+, C++17, Lua |
+| **DL Frameworks** | PyTorch, Transformers, timm |
+| **CV Tools** | OpenCV, CLIP, LLaVA |
+| **NLP Tools** | Sentence-Transformers, BM25, CoNLL-2003 |
+| **MLOps** | Hydra, MLflow, Weights & Biases |
+| **Build Systems** | CMake, Pybind11, setuptools |
+| **Compute** | CUDA, OpenMP, NumPy |
+
+---
+
+## 📖 Documentation
+
+- [**LICENSE**](./LICENSE) — MIT License
+- [**LICENSE_INFO.md**](./LICENSE_INFO.md) — MIT vs Apache 2.0 comparison
+- [**TRANSFORMATION_COMPLETE.md**](./TRANSFORMATION_COMPLETE.md) — Development history
+- [**GENERALIZATION_SUMMARY.md**](./GENERALIZATION_SUMMARY.md) — Authorship updates
 
 ---
 
 ## 🙏 Acknowledgments
 
 - **IIT Bombay** for computational resources
-- **PyTorch, timm, Hugging Face** communities for excellent tooling
+- **PyTorch, Hugging Face, timm** communities for excellent tooling
 - **Open-source contributors** whose libraries made this possible
 
 ---
 
-## 🌟 Star History
+## 📄 License
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/deep-learning-research-suite&type=Date)](https://star-history.com/#yourusername/deep-learning-research-suite&Date)
+MIT License — See [LICENSE](./LICENSE)
+
+```
+Copyright (c) 2024 Yash Sarang
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software...
+```
 
 ---
 
-**⭐ Star this repo if it helped your research or learning!**
+## 🎓 Citation
+
+```bibtex
+@misc{sarang2024airesearch,
+  author = {Sarang, Yash},
+  title = {AI Research Suite: Production-Ready CV, NLP, and Multimodal Projects},
+  year = {2024},
+  publisher = {GitHub},
+  url = {https://github.com/YashSarang/ai-research-suite}
+}
+```
+
+---
+
+## 🤝 Contributing
+
+This is a personal research portfolio, but feedback and suggestions are welcome!
+
+- Open an issue for bugs/suggestions
+- Pull requests for documentation improvements accepted
+- For major changes, open an issue first
+
+---
+
+## 📞 Contact
+
+**Yash Sarang**  
+- GitHub: [@YashSarang](https://github.com/YashSarang)
+- Portfolio: [Coming Soon]
+- Email: [Available on request]
+
+---
+
+**⭐ If you find this work useful, please consider starring the repository!**

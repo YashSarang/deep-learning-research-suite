@@ -1,0 +1,7 @@
+A1: best_ve=100.00% final_ve=100.00% init_rho=0.8409 final_rho=1732.1890 gt_mean=-4.30 gt_med=-4.35 sat_mean=0.0008 sat_pct=100.0% z_mean=nan z_sat=nan% r_mean=nan r_sat=nan%
+A2: best_ve=100.00% final_ve=100.00% init_rho=0.7091 final_rho=1.1389 gt_mean=-4.53 gt_med=-4.46 sat_mean=0.6336 sat_pct=0.0% z_mean=nan z_sat=nan% r_mean=nan r_sat=nan%
+A3: best_ve=100.00% final_ve=100.00% init_rho=0.7091 final_rho=1.1194 gt_mean=-4.51 gt_med=-4.58 sat_mean=0.6114 sat_pct=0.0% z_mean=nan z_sat=nan% r_mean=nan r_sat=nan%
+A4: best_ve=99.99% final_ve=100.00% init_rho=0.0786 final_rho=2.0203 gt_mean=-6.32 gt_med=-6.12 sat_mean=0.5050 sat_pct=0.0% z_mean=0.1849 z_sat=0.0% r_mean=0.4504 r_sat=0.0%
+A5: best_ve=100.00% final_ve=100.00% init_rho=0.0786 final_rho=1.1597 gt_mean=-4.29 gt_med=-4.20 sat_mean=0.8677 sat_pct=0.0% z_mean=0.1239 z_sat=0.0% r_mean=0.4931 r_sat=0.0%
+B1: best_ve=25.90% final_ve=39.60% init_rho=0.7216 final_rho=0.7051 gt_mean=-2.00 gt_med=-2.00 sat_mean=0.9386 sat_pct=0.0% z_mean=nan z_sat=nan% r_mean=nan r_sat=nan%
+B2: best_ve=24.25% final_ve=39.19% init_rho=0.0730 final_rho=0.0730 gt_mean=-2.83 gt_med=-2.83 sat_mean=0.9949 sat_pct=0.0% z_mean=0.1193 z_sat=0.0% r_mean=0.4989 r_sat=0.0%

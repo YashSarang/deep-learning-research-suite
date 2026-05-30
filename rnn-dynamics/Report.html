@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Report</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css" />
+</head>
+<body>
+<h1 id="cs728-programming-assignment-2">CS728 – Programming Assignment
+2</h1>
+<h2
+id="training-dynamics-of-recurrent-neural-networks-and-grus">Training
+Dynamics of Recurrent Neural Networks and GRUs</h2>
+<p><strong>Team :</strong> Yash Sarang - 24M2160, Akanksh -
+24M2166<br />
+<strong>Course:</strong> CS728 : Advanced Topics in Deep Learning<br />
+<strong>Reference:</strong> Pascanu et al., <em>On the difficulty of
+training recurrent neural networks</em>, ICML 2013</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>This report analyzes the training dynamics of Vanilla Recurrent
+Neural Networks (RNNs) and Gated Recurrent Units (GRUs) on synthetic
+long-range dependency tasks. We investigate the phenomena of
+<strong>vanishing and exploding gradients</strong>, <strong>activation
+saturation</strong>, <strong>gate saturation (GRU)</strong>,
+<strong>spectral radius evolution</strong>, and the <strong>effect of
+gradient clipping</strong>. The study closely follows the diagnostic
+framework proposed by Pascanu et al. (2013).</p>
+<p>Both architectures were implemented from scratch using PyTorch (no
+<code>torch.nn.RNN</code> / <code>torch.nn.GRU</code>). Training was
+conducted on two synthetic tasks:</p>
+<ul>
+<li><strong>Task 1 – Memorization (Classification):</strong> The model
+must classify a sequence based on a target value placed at an early
+timestep and repeated at specific long-range positions.</li>
+<li><strong>Task 2 – Multiplication (Regression):</strong> The model
+must predict the product of two values seen at fixed positions in a long
+sequence.</li>
+</ul>
+<hr />
+<h2 id="implementation">2. Implementation</h2>
+<h3 id="vanilla-rnn">2.1 Vanilla RNN</h3>
+<p>The RNN cell follows the standard formulation:</p>
+<p><span class="math inline">h_t = \tanh(W_{xh} x_t + W_{hh} h_{t-1} +
+b_h)</span></p>
+<p><span class="math inline">o_t = W_{ho} h_t + b_o</span></p>
+<p>The full hidden sequence <span class="math inline">h_{1:T} \in
+\mathbb{R}^{T \times B \times H}</span> is returned at each step to
+enable gradient-through-time diagnostics. <code>rho()</code> returns the
+spectral radius of <span class="math inline">W_{hh}</span> via its
+largest singular value.</p>
+<h3 id="gru">2.2 GRU</h3>
+<p>The GRU cell follows:</p>
+<p><span class="math inline">z_t = \sigma(W_{xz} x_t + W_{hz} h_{t-1} +
+b_z)</span></p>
+<p><span class="math inline">r_t = \sigma(W_{xr} x_t + W_{hr} h_{t-1} +
+b_r)</span></p>
+<p><span class="math inline">\tilde{h}_t = \tanh(W_{xh} x_t + W_{hh}(r_t
+\odot h_{t-1}) + b_h)</span></p>
+<p><span class="math inline">h_t = (1-z_t) \odot h_{t-1} + z_t \odot
+\tilde{h}_t</span></p>
+<p>Gate saturation distances <span class="math inline">d(z) = \min(z,
+1-z)</span> and <span class="math inline">d(r) = \min(r, 1-r)</span> are
+logged when <code>--diagGates</code> is enabled. <code>rho()</code>
+returns <span class="math inline">\rho(W_{hh})</span> of the candidate
+recurrent matrix.</p>
+<h3 id="diagnostics">2.3 Diagnostics</h3>
+<p>At each checkpoint (<code>--checkFreq 20</code>), the following are
+recorded:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Diagnostic</th>
+<th>Formula</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Global gradient norm</td>
+<td><span class="math inline">\|\nabla_\theta L\|_2</span></td>
+<td>Magnitude of weight updates</td>
+</tr>
+<tr>
+<td>Post-clip gradient norm</td>
+<td>same, after clipping</td>
+<td>Effect of clipping</td>
+</tr>
+<tr>
+<td>Gradient through time</td>
+<td><span class="math inline">g_t = \|\partial L / \partial
+h_t\|_2</span></td>
+<td>Histogram of <span class="math inline">\log_{10}(g_t)</span></td>
+</tr>
+<tr>
+<td>Hidden saturation</td>
+<td><span class="math inline">d(h) = 1 - \|h\|</span></td>
+<td>Near 0 → saturated</td>
+</tr>
+<tr>
+<td>Gate saturation (GRU)</td>
+<td><span class="math inline">d(v) = \min(v, 1-v)</span></td>
+<td>Near 0 → gate fully open/closed</td>
+</tr>
+<tr>
+<td>Spectral radius</td>
+<td><span class="math inline">\rho(W_{hh})</span></td>
+<td>Proximity to gradient stability boundary (<span
+class="math inline">\rho=1</span>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="task-1-memorization-classification">3. Task 1 : Memorization
+(Classification)</h2>
+<h3 id="experiment-a1-rnn-no-gradient-clipping">3.1 Experiment A1: RNN,
+No Gradient Clipping</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best Validation Error</td>
+<td><strong>100.00%</strong> (model failed to learn)</td>
+</tr>
+<tr>
+<td>Final <span class="math inline">\rho(W_{hh})</span></td>
+<td><strong>1732.19</strong> (catastrophic explosion)</td>
+</tr>
+<tr>
+<td>Initial <span class="math inline">\rho(W_{hh})</span></td>
+<td>0.8409</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td>−4.30</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> median</td>
+<td>−4.35</td>
+</tr>
+<tr>
+<td>Hidden saturation <span class="math inline">d(h)</span>, mean</td>
+<td><strong>0.0008</strong></td>
+</tr>
+<tr>
+<td>Units saturated (<span class="math inline">d(h) &lt;
+0.05</span>)</td>
+<td><strong>100.0%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analysis:</strong></p>
+<p>A1 is the baseline: a Vanilla RNN with tanh activation and <strong>no
+gradient clipping</strong>. The results reveal a catastrophic failure
+mode driven by <strong>exploding gradients</strong>:</p>
+<ul>
+<li>The spectral radius <span class="math inline">\rho(W_{hh})</span>
+grew from 0.84 to <strong>1732</strong> over 50,000 iterations. When
+<span class="math inline">\rho &gt; 1</span>, repeated matrix
+multiplications in BPTT cause gradient magnitudes to grow exponentially
+with sequence length.</li>
+<li>The gradient-through-time histogram (mean <span
+class="math inline">\log_{10}(g_t) \approx -4.3</span>) indicates
+gradients are neither vanishing nor exploding at a per-timestep basis
+initially, but the global norm explodes, destabilizing weight
+updates.</li>
+<li><strong>Consequence:</strong> The hidden state <span
+class="math inline">h_t</span> saturates completely, i.e. <strong>100%
+of units</strong> have <span class="math inline">d(h) &lt; 0.05</span>,
+meaning every hidden state is pinned to <span class="math inline">\pm
+1</span>. A saturated tanh produces near-zero gradient (<span
+class="math inline">\tanh&#39;(x) \approx 0</span> when <span
+class="math inline">|x| \gg 0</span>), so no learning signal
+propagates.</li>
+<li>The model achieves 100% error (random prediction for a 20-class
+task), confirming complete training failure.</li>
+</ul>
+<strong>Plots (A1):</strong><br />
+
+<p align="center">
+<img src="PA2_code/figures/A1_grad_histogram.png" alt="A1 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A1_sat_histogram.png" alt="A1 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A1_valid_error.png" alt="A1 Val Error" width="48%" />
+<img src="PA2_code/figures/A1_rho.png" alt="A1 Spectral Radius" width="48%" />
+</p>
+<hr />
+<h3 id="experiment-a2-rnn-gradient-clipping-0.05">3.2 Experiment A2:
+RNN, Gradient Clipping = 0.05</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best Validation Error</td>
+<td><strong>100.00%</strong></td>
+</tr>
+<tr>
+<td>Final <span class="math inline">\rho(W_{hh})</span></td>
+<td><strong>1.1389</strong> (stable)</td>
+</tr>
+<tr>
+<td>Initial <span class="math inline">\rho(W_{hh})</span></td>
+<td>0.7091</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td>−4.53</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> median</td>
+<td>−4.46</td>
+</tr>
+<tr>
+<td>Hidden saturation <span class="math inline">d(h)</span>, mean</td>
+<td>0.6336</td>
+</tr>
+<tr>
+<td>Units saturated (<span class="math inline">d(h) &lt;
+0.05</span>)</td>
+<td><strong>0.0%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analysis:</strong></p>
+<p>A2 applies aggressive clipping (cutoff = 0.05 of gradient norm). The
+effect is dramatic:</p>
+<ul>
+<li><strong>Spectral radius stabilized:</strong> <span
+class="math inline">\rho</span> grew only to 1.14 (versus 1732 in A1),
+preventing exponential blow-up in BPTT computations.</li>
+<li><strong>Saturation resolved:</strong> Mean <span
+class="math inline">d(h) = 0.63</span> with 0% saturated units (vs 100%
+in A1). The hidden state is now free to explore all values in <span
+class="math inline">(-1, 1)</span>.</li>
+<li>However, <strong>validation error remains 100%</strong>. That is,
+the model still fails to learn. Clipping at 0.05 overcorrects: gradient
+magnitudes <span class="math inline">\log_{10}(g_t) \approx -4.5</span>
+suggest <strong>moderately vanishing</strong> gradients. The task
+requires memorizing information over very long horizons; with constant
+rescaling to a tiny norm, the informative gradient signal is lost.</li>
+<li>The gradient-through-time histogram is centered around <span
+class="math inline">-4.5</span> with most mass concentrated in <span
+class="math inline">[-6, -3]</span>, indicating gradients do reach early
+timesteps but are too small for effective learning.</li>
+</ul>
+<strong>Plots (A2):</strong><br />
+
+<p align="center">
+<img src="PA2_code/figures/A2_grad_histogram.png" alt="A2 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A2_sat_histogram.png" alt="A2 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A2_valid_error.png" alt="A2 Val Error" width="48%" />
+<img src="PA2_code/figures/A2_rho.png" alt="A2 Spectral Radius" width="48%" />
+</p>
+<hr />
+<h3 id="experiment-a3-rnn-gradient-clipping-0.01">3.3 Experiment A3:
+RNN, Gradient Clipping = 0.01</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best Validation Error</td>
+<td><strong>100.00%</strong></td>
+</tr>
+<tr>
+<td>Final <span class="math inline">\rho(W_{hh})</span></td>
+<td><strong>1.1194</strong> (stable)</td>
+</tr>
+<tr>
+<td>Initial <span class="math inline">\rho(W_{hh})</span></td>
+<td>0.7091</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td>−4.51</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> median</td>
+<td>−4.58</td>
+</tr>
+<tr>
+<td>Hidden saturation <span class="math inline">d(h)</span>, mean</td>
+<td>0.6114</td>
+</tr>
+<tr>
+<td>Units saturated (<span class="math inline">d(h) &lt;
+0.05</span>)</td>
+<td><strong>0.0%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analysis:</strong></p>
+<p>A3 uses even more aggressive clipping (cutoff = 0.01). The results
+are near-identical to A2:</p>
+<ul>
+<li><span class="math inline">\rho(W_{hh})</span> stabilizes at 1.12,
+<strong>even slightly lower</strong> than A2’s 1.14, suggesting stricter
+clipping imposes tighter control over weight growth.</li>
+<li>Hidden saturation pattern is essentially the same: 0% saturated,
+mean <span class="math inline">d(h) = 0.61</span>.</li>
+<li>Gradient magnitudes (<span class="math inline">\log_{10}(g_t)
+\approx -4.5</span>) are statistically indistinguishable from A2.</li>
+<li><strong>Conclusion:</strong> Between clip=0.05 and clip=0.01,
+gradient clipping threshold within this range has minimal differential
+effect. The limiting factor is the fundamental difficulty of the
+memorization task over very long sequences, a property of the task
+architecture (50 hidden units, sequences of length 100+), not the
+clipping threshold per se.</li>
+</ul>
+<strong>Plots (A3):</strong><br />
+
+<p align="center">
+<img src="PA2_code/figures/A3_grad_histogram.png" alt="A3 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A3_sat_histogram.png" alt="A3 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A3_valid_error.png" alt="A3 Val Error" width="48%" />
+<img src="PA2_code/figures/A3_rho.png" alt="A3 Spectral Radius" width="48%" />
+</p>
+<p><strong>RNN Clipping Comparison (A1 vs. A2 vs. A3):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Run</th>
+<th>ρ(init)</th>
+<th>ρ(final)</th>
+<th>Saturation</th>
+<th>0% val error achieved</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A1 (no clip)</td>
+<td>0.84</td>
+<td><strong>1732</strong></td>
+<td>100%</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>A2 (clip=0.05)</td>
+<td>0.71</td>
+<td>1.14</td>
+<td>0%</td>
+<td>✗</td>
+</tr>
+<tr>
+<td>A3 (clip=0.01)</td>
+<td>0.71</td>
+<td>1.12</td>
+<td>0%</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="experiment-a4-gru-no-gradient-clipping">3.4 Experiment A4: GRU,
+No Gradient Clipping</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best Validation Error</td>
+<td><strong>99.99%</strong></td>
+</tr>
+<tr>
+<td>Final <span class="math inline">\rho(W_{hh})</span></td>
+<td><strong>2.0203</strong></td>
+</tr>
+<tr>
+<td>Initial <span class="math inline">\rho(W_{hh})</span></td>
+<td>0.0786</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td><strong>−6.32</strong></td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> median</td>
+<td>−6.12</td>
+</tr>
+<tr>
+<td>Hidden saturation <span class="math inline">d(h)</span>, mean</td>
+<td>0.5050</td>
+</tr>
+<tr>
+<td>Units saturated (<span class="math inline">d(h) &lt;
+0.05</span>)</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>z-gate mean <span class="math inline">d(z)</span></td>
+<td>0.1849</td>
+</tr>
+<tr>
+<td>z-gate saturated (<span class="math inline">d(z) &lt;
+0.05</span>)</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>r-gate mean <span class="math inline">d(r)</span></td>
+<td>0.4504</td>
+</tr>
+<tr>
+<td>r-gate saturated (<span class="math inline">d(r) &lt;
+0.05</span>)</td>
+<td>0.0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analysis:</strong></p>
+<p>A4 runs the GRU architecture without clipping on the memorization
+task.</p>
+<ul>
+<li><strong>Gradient vanishing is the dominant issue:</strong> Mean
+<span class="math inline">\log_{10}(g_t) = -6.32</span> (versus <span
+class="math inline">-4.3</span> for RNN A1). The GRU’s gating mechanism
+actually <strong>paradoxically reduces gradient magnitude through
+time</strong> more than the vanilla RNN in the no-clip setting. This is
+because the update gate <span class="math inline">z_t</span> can
+suppress contributions from previous timesteps.</li>
+<li><strong>Spectral radius</strong> grew to 2.02, a moderate blow-up
+but mitigated by the gating: the update gate <span
+class="math inline">z_t \in (0,1)</span> limits how much of the
+candidate state propagates, acting as a partial clipping mechanism on
+hidden state magnitudes.</li>
+<li><strong>Gate analysis:</strong>
+<ul>
+<li>The <strong>z-gate (update gate)</strong> has mean <span
+class="math inline">d(z) = 0.185</span>, indicating it tends to lean
+toward <strong>closed</strong> (<span class="math inline">z \to
+0</span>, retaining old state) rather than fully open. This is
+meaningful: the GRU is learning to preserve hidden state memory.</li>
+<li>The <strong>r-gate (reset gate)</strong> has mean <span
+class="math inline">d(r) = 0.450</span>, near the maximum unsaturated
+value of 0.5, meaning the r-gate is <strong>not saturated</strong> and
+actively modulates how much past state influences the candidate.</li>
+</ul></li>
+<li>Despite better architectural inductive biases, the task is still not
+solved (99.99% error), confirming the fundamental challenge of 100+ step
+long-range dependencies.</li>
+</ul>
+<strong>Plots (A4):</strong><br />
+
+<p align="center">
+<img src="PA2_code/figures/A4_grad_histogram.png" alt="A4 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A4_sat_histogram.png" alt="A4 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A4_valid_error.png" alt="A4 Val Error" width="48%" />
+<img src="PA2_code/figures/A4_rho.png" alt="A4 Spectral Radius" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A4_gate_z_sat.png" alt="A4 Z-Gate" width="48%" />
+<img src="PA2_code/figures/A4_gate_r_sat.png" alt="A4 R-Gate" width="48%" />
+</p>
+<hr />
+<h3 id="experiment-a5-gru-gradient-clipping-0.05">3.5 Experiment A5:
+GRU, Gradient Clipping = 0.05</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best Validation Error</td>
+<td><strong>100.00%</strong></td>
+</tr>
+<tr>
+<td>Final <span class="math inline">\rho(W_{hh})</span></td>
+<td><strong>1.1597</strong></td>
+</tr>
+<tr>
+<td>Initial <span class="math inline">\rho(W_{hh})</span></td>
+<td>0.0786</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td><strong>−4.29</strong></td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> median</td>
+<td>−4.20</td>
+</tr>
+<tr>
+<td>Hidden saturation <span class="math inline">d(h)</span>, mean</td>
+<td>0.8677</td>
+</tr>
+<tr>
+<td>Units saturated (<span class="math inline">d(h) &lt;
+0.05</span>)</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>z-gate mean <span class="math inline">d(z)</span></td>
+<td>0.1239</td>
+</tr>
+<tr>
+<td>z-gate saturated (<span class="math inline">d(z) &lt;
+0.05</span>)</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>r-gate mean <span class="math inline">d(r)</span></td>
+<td>0.4931</td>
+</tr>
+<tr>
+<td>r-gate saturated (<span class="math inline">d(r) &lt;
+0.05</span>)</td>
+<td>0.0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analysis:</strong></p>
+<p>A5 clips GRU gradients at 0.05. The effects are notably different
+from A4:</p>
+<ul>
+<li><strong>Gradient-through-time improves:</strong> <span
+class="math inline">\log_{10}(g_t) = -4.29</span> versus <span
+class="math inline">-6.32</span> for A4. Clipping prevents the <span
+class="math inline">\rho</span>-driven blowup (stabilized at 1.16
+vs. 2.02), which in turn allows gradients to flow without
+saturation-induced decay.</li>
+<li><strong>Hidden state is far less saturated:</strong> mean <span
+class="math inline">d(h) = 0.87</span> (more uniform, mid-range
+activations), 0% saturation, indicating healthier non-saturated hidden
+dynamics.</li>
+<li><strong>z-gate is more closed:</strong> Mean <span
+class="math inline">d(z) = 0.124</span> (closer to 0 than A4’s 0.185).
+With clipping keeping <span class="math inline">\rho</span> stable, the
+GRU’s update gate learns to predominantly <strong>retain state</strong>
+(<span class="math inline">z \approx 0</span>), which is the correct
+inductive bias for memory-heavy tasks.</li>
+<li><strong>r-gate near 0.5:</strong> <span class="math inline">d(r) =
+0.493</span>, a largely unsaturated, indicating the reset gate fully
+participates in all timesteps.</li>
+</ul>
+<strong>Plots (A5):</strong><br />
+
+<p align="center">
+<img src="PA2_code/figures/A5_grad_histogram.png" alt="A5 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A5_sat_histogram.png" alt="A5 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A5_valid_error.png" alt="A5 Val Error" width="48%" />
+<img src="PA2_code/figures/A5_rho.png" alt="A5 Spectral Radius" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A5_gate_z_sat.png" alt="A5 Z-Gate" width="48%" />
+<img src="PA2_code/figures/A5_gate_r_sat.png" alt="A5 R-Gate" width="48%" />
+</p>
+<p><strong>RNN vs. GRU Comparison (A1 vs. A4, no clip):</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A1 (RNN, no clip)</th>
+<th>A4 (GRU, no clip)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Final ρ</td>
+<td>1732</td>
+<td>2.02</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td>−4.30</td>
+<td>−6.32</td>
+</tr>
+<tr>
+<td>Saturation %</td>
+<td>100%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Gate mechanism</td>
+<td>None</td>
+<td>z, r gates present</td>
+</tr>
+</tbody>
+</table>
+<p>GRU avoids catastrophic saturation (due to bounded hidden update via
+z-gate), but introduces stronger gradient vanishing due to the
+multiplicative gating dampening gradient flow from early timesteps.</p>
+<hr />
+<h2 id="task-2-multiplication-regression">4. Task 2 : Multiplication
+(Regression)</h2>
+<h3 id="experiment-b1-rnn-no-gradient-clipping">4.1 Experiment B1: RNN,
+No Gradient Clipping</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best Validation Error</td>
+<td><strong>25.90%</strong></td>
+</tr>
+<tr>
+<td>Final Validation Error</td>
+<td>39.60%</td>
+</tr>
+<tr>
+<td>Final <span class="math inline">\rho(W_{hh})</span></td>
+<td><strong>0.7051</strong> (stable : no explosion)</td>
+</tr>
+<tr>
+<td>Initial <span class="math inline">\rho(W_{hh})</span></td>
+<td>0.7216</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td><strong>−2.00</strong></td>
+</tr>
+<tr>
+<td>Hidden saturation <span class="math inline">d(h)</span>, mean</td>
+<td>0.9386</td>
+</tr>
+<tr>
+<td>Units saturated (<span class="math inline">d(h) &lt;
+0.05</span>)</td>
+<td>0.0%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analysis:</strong></p>
+<p>B1 is the RNN on a regression task over the same long-range
+sequences. Notably, the spectral radius <strong>did not explode</strong>
+here (<span class="math inline">\rho \approx 0.70</span> throughout),
+unlike A1. This is because the regression loss landscape is smoother, so
+gradients remain bounded without clipping. The model achieves 25.9% best
+validation error, showing partial learning, but degrades to 39.6% by the
+end of training, indicating <strong>overfitting or training
+instability</strong> in later iterations.</p>
+<p>The gradient-through-time profile (<span
+class="math inline">\log_{10}(g_t) \approx -2.0</span>) shows
+<strong>healthy gradient magnitudes</strong>, hence far better than the
+memorization task. This explains why some learning occurs: the gradient
+signal is large enough to reach early timesteps.</p>
+<p>Hidden saturation is essentially nil (mean <span
+class="math inline">d(h) = 0.94</span>), confirming healthy dynamics
+despite no clipping.</p>
+<strong>Plots (B1):</strong><br />
+
+<p align="center">
+<img src="PA2_code/figures/B1_grad_histogram.png" alt="B1 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/B1_sat_histogram.png" alt="B1 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/B1_valid_error.png" alt="B1 Val Error" width="48%" />
+<img src="PA2_code/figures/B1_rho.png" alt="B1 Spectral Radius" width="48%" />
+</p>
+<hr />
+<h3 id="experiment-b2-gru-no-gradient-clipping">4.2 Experiment B2: GRU,
+No Gradient Clipping</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best Validation Error</td>
+<td><strong>24.25%</strong></td>
+</tr>
+<tr>
+<td>Final Validation Error</td>
+<td>39.19%</td>
+</tr>
+<tr>
+<td>Final <span class="math inline">\rho(W_{hh})</span></td>
+<td><strong>0.0730</strong> (stable, converged)</td>
+</tr>
+<tr>
+<td>Initial <span class="math inline">\rho(W_{hh})</span></td>
+<td>0.0730</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td><strong>−2.83</strong></td>
+</tr>
+<tr>
+<td>Hidden saturation <span class="math inline">d(h)</span>, mean</td>
+<td>0.9949</td>
+</tr>
+<tr>
+<td>Units saturated (<span class="math inline">d(h) &lt;
+0.05</span>)</td>
+<td>0.0%</td>
+</tr>
+<tr>
+<td>z-gate mean <span class="math inline">d(z)</span></td>
+<td>0.1193</td>
+</tr>
+<tr>
+<td>r-gate mean <span class="math inline">d(r)</span></td>
+<td>0.4989</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Analysis:</strong></p>
+<p>B2 runs the GRU (no clipping) on the regression task.</p>
+<ul>
+<li><strong>Very similar performance to B1:</strong> best error = 24.25%
+vs. 25.9% (marginal improvement). Both show degradation to ~39% by end
+of training.</li>
+<li><strong>Spectral radius stays flat at 0.073</strong>, the GRU’s
+recurrent <span class="math inline">W_{hh}</span> (the candidate matrix)
+is tightly bounded. This reflects that the update is controlled by <span
+class="math inline">r_t \odot h_{t-1}</span>, the reset gate limits how
+much of <span class="math inline">h_{t-1}</span> enters <span
+class="math inline">W_{hh}</span>, inherently regularizing the effective
+spectral radius.</li>
+<li><strong>Gradient flow</strong>: <span
+class="math inline">\log_{10}(g_t) = -2.83</span> vs. <span
+class="math inline">-2.0</span> for B1. Slight reduction due to gating
+dampening, but still within the informative range.</li>
+<li><strong>Gate behavior:</strong>
+<ul>
+<li>z-gate mean <span class="math inline">d(z) = 0.119</span>:
+predominantly closed (retains old state), sensible for regression where
+persistence of seen values matters.</li>
+<li>r-gate mean <span class="math inline">d(r) = 0.499</span>: maximally
+unsaturated, fully participates in every timestep.</li>
+</ul></li>
+</ul>
+<strong>Plots (B2):</strong><br />
+
+<p align="center">
+<img src="PA2_code/figures/B2_grad_histogram.png" alt="B2 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/B2_sat_histogram.png" alt="B2 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/B2_valid_error.png" alt="B2 Val Error" width="48%" />
+<img src="PA2_code/figures/B2_rho.png" alt="B2 Spectral Radius" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/B2_gate_z_sat.png" alt="B2 Z-Gate" width="48%" />
+<img src="PA2_code/figures/B2_gate_r_sat.png" alt="B2 R-Gate" width="48%" />
+</p>
+<p><strong>B1 vs. B2 Comparison:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>B1 (RNN)</th>
+<th>B2 (GRU)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Best val error</td>
+<td>25.90%</td>
+<td><strong>24.25%</strong></td>
+</tr>
+<tr>
+<td>Final <span class="math inline">\rho</span></td>
+<td>0.70</td>
+<td>0.07</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span> mean</td>
+<td>−2.00</td>
+<td>−2.83</td>
+</tr>
+<tr>
+<td>Gating</td>
+<td>None</td>
+<td>z+r</td>
+</tr>
+</tbody>
+</table>
+<p>GRU provides a marginal benefit in regression. The main advantage of
+GRU is architectural robustness (bounded <span
+class="math inline">\rho</span>, no saturation), not a dramatic accuracy
+gain on this task.</p>
+<hr />
+<h2 id="summary-comparison-and-interpretation">5. Summary Comparison and
+Interpretation</h2>
+<h3 id="effect-of-gradient-clipping-on-rnn-a1---a2---a3">5.1 Effect of
+Gradient Clipping on RNN (A1 -&gt; A2 -&gt; A3)</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>A1 (no clip)</th>
+<th>A2 (clip=0.05)</th>
+<th>A3 (clip=0.01)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\rho</span> final</td>
+<td><strong>1732</strong></td>
+<td>1.14</td>
+<td>1.12</td>
+</tr>
+<tr>
+<td>Saturation %</td>
+<td><strong>100%</strong></td>
+<td>0%</td>
+<td>0%</td>
+</tr>
+<tr>
+<td><span class="math inline">\log_{10}(g_t)</span></td>
+<td>−4.30</td>
+<td>−4.53</td>
+<td>−4.51</td>
+</tr>
+<tr>
+<td>Best val error</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key insight:</strong> Gradient clipping is
+<strong>necessary</strong> to prevent spectral explosion and saturation,
+but insufficient alone to enable learning on very long-range tasks with
+small hidden states. Both A2 and A3 stabilize training but cannot
+propagate useful gradient information over 100+ timesteps with only 50
+hidden units.</p>
+<h3 id="rnn-vs.-gru-on-memorization-a1-vs.-a4-no-clipping">5.2 RNN
+vs. GRU on Memorization (A1 vs. A4, no clipping)</h3>
+<p>The GRU completely avoids catastrophic saturation (100% -&gt; 0%),
+showing that gating per se is protective even without clipping. However,
+the GRU introduces its own gradient pathology: the update gate dampens
+gradient magnitude to <span class="math inline">\log_{10}(g_t) \approx
+-6.3</span> (much worse than RNN’s <span
+class="math inline">-4.3</span>), as the <span
+class="math inline">z_t</span> sigmoid gate creates a vanishing
+bottleneck in BPTT.</p>
+<h3 id="rnn-vs.-gru-on-regression-b1-vs.-b2">5.3 RNN vs. GRU on
+Regression (B1 vs. B2)</h3>
+<p>On regression, both architectures partially succeed (~25% best
+error). The smoother regression loss landscape prevents the spectral
+explosion seen in memorization A1. GRU shows marginal superiority
+(24.25% vs 25.9%) with much lower effective spectral radius (0.07 vs
+0.70).</p>
+<h3 id="vanishing-vs.-exploding-gradients">5.4 Vanishing vs. Exploding
+Gradients</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Phenomenon</th>
+<th>Experiments</th>
+<th><span class="math inline">\log_{10}(g_t)</span> signature</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exploding gradients</td>
+<td>A1</td>
+<td><span class="math inline">\rho \to 1732</span>, saturation -&gt;
+100%</td>
+</tr>
+<tr>
+<td>Vanishing gradients</td>
+<td>A4</td>
+<td><span class="math inline">\log_{10}(g_t)</span> mean = −6.3</td>
+</tr>
+<tr>
+<td>Moderate vanishing</td>
+<td>A2, A3, A5</td>
+<td><span class="math inline">\log_{10}(g_t) \approx -4.5</span></td>
+</tr>
+<tr>
+<td>Healthy gradient flow</td>
+<td>B1, B2</td>
+<td><span class="math inline">\log_{10}(g_t) \approx -2.0</span> to
+−2.8</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="extra-credit-temporal-order-task-with-sgd-cr">6. Extra Credit:
+Temporal Order Task with SGD-CR</h2>
+<h3 id="objective">6.1 Objective</h3>
+<p>Reproduce successful training on the <strong>temporal order</strong>
+classification task (4 classes based on 2 bits embedded at positions
+10–20% and 50–60% of long sequences) using the Pascanu SGD-CR
+method:</p>
+<ol type="1">
+<li><strong>Gradient clipping</strong> (rescale-based)</li>
+<li><strong><span class="math inline">\Omega</span> regularizer</strong>
+: encourages <span class="math inline">\|\nabla_{h_t} L\| /
+\|\nabla_{h_{t+1}} L\|</span> ratio close to 1</li>
+<li><strong>Smart tanh initialization</strong> : sparse <span
+class="math inline">W_{hh}</span> scaled to <span
+class="math inline">\rho = 0.95</span></li>
+</ol>
+<p>The baseline (standard RNN) stalls at NLL ≈ 1.386 = ln(4), the
+uniform prediction floor.</p>
+<h3 id="experimental-results">6.2 Experimental Results</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+</colgroup>
+<thead>
+<tr>
+<th>Run</th>
+<th>nhid</th>
+<th>bs</th>
+<th>lr</th>
+<th>clip</th>
+<th>α</th>
+<th>seq_len</th>
+<th>maxiters</th>
+<th>Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EC1</td>
+<td>50</td>
+<td>20</td>
+<td>0.01</td>
+<td>1.0</td>
+<td>0.5</td>
+<td>50–200</td>
+<td>50k</td>
+<td>NLL stuck at 1.386</td>
+</tr>
+<tr>
+<td>EC2</td>
+<td>50</td>
+<td>20</td>
+<td>0.01</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>50–200</td>
+<td>50k</td>
+<td>NLL stuck at 1.386</td>
+</tr>
+<tr>
+<td>EC3</td>
+<td>50</td>
+<td>20</td>
+<td>0.01</td>
+<td>0.5</td>
+<td>0.5</td>
+<td>50–200</td>
+<td>50k</td>
+<td>NLL stuck at 1.386</td>
+</tr>
+<tr>
+<td>EC4</td>
+<td>50</td>
+<td>20</td>
+<td>0.01</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>50–200</td>
+<td>50k</td>
+<td>NLL stuck at 1.386</td>
+</tr>
+<tr>
+<td>EC5</td>
+<td>100</td>
+<td>20</td>
+<td>0.01</td>
+<td>1.0</td>
+<td>0.5</td>
+<td>50–200</td>
+<td>100k</td>
+<td>NLL ≈ 1.387</td>
+</tr>
+<tr>
+<td>EC6</td>
+<td>200</td>
+<td>20</td>
+<td>0.01</td>
+<td>1.0</td>
+<td>0.5</td>
+<td>50–200</td>
+<td>100k</td>
+<td>NLL -&gt; 1.36, bve=37%</td>
+</tr>
+<tr>
+<td><strong>EC7</strong></td>
+<td><strong>100</strong></td>
+<td><strong>20</strong></td>
+<td><strong>0.01</strong></td>
+<td><strong>1.0</strong></td>
+<td><strong>0.5</strong></td>
+<td><strong>20–50</strong></td>
+<td><strong>100k</strong></td>
+<td><strong>NLL -&gt; 0.37, bve=0.0%</strong></td>
+</tr>
+<tr>
+<td>EC8</td>
+<td>100</td>
+<td>20</td>
+<td>0.05</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>50–200</td>
+<td>100k</td>
+<td>bve=73.5%</td>
+</tr>
+<tr>
+<td><strong>EC9</strong></td>
+<td><strong>500</strong></td>
+<td><strong>200</strong></td>
+<td><strong>0.01</strong></td>
+<td><strong>1.0</strong></td>
+<td><strong>0.5</strong></td>
+<td><strong>50–200</strong></td>
+<td><strong>43k</strong></td>
+<td><strong>NLL -&gt; 0.75, bve=3.89%</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="key-findings">6.3 Key Findings</h3>
+<p><strong>Finding 1 : Capacity Matters:</strong> With
+<code>nhid=50</code> (EC1–EC4), no configuration broke the 1.386 floor.
+Sparse smart_tanh initialization with 30% connectivity creates only ~15
+non-zero connections per row with 50 units, insufficient to carve
+diverse gradient flow paths. Increasing to <code>nhid=100</code>+
+(EC5–EC9) was necessary.</p>
+<p><strong>Finding 2 : Short Sequences Solve it Completely
+(EC7):</strong> Using <code>seq_len=20–50</code> (vs 50–200), EC7
+<strong>fully solved</strong> the task: NLL = 0.37, 0% best valid error,
+converged in ~10,000 steps. With shorter sequences, the signal bits are
+2–10 and 10–30 timesteps back, making gradient propagation far more
+tractable. This confirms: <strong>the Pascanu techniques work</strong>,
+the main limitation is sequence length.</p>
+<p><strong>Finding 3 : Batch Size + Capacity Scales the Long-Sequence
+Case (EC9):</strong> Using <code>nhid=500, bs=200</code>, EC9 broke
+through 1.386 at iteration ~8k on full-length sequences (50–200),
+reaching NLL=0.75 and 3.89% best validation error. Large batch size
+stabilizes the <span class="math inline">\Omega</span> regularizer’s
+per-timestep gradient ratio estimates. However, training was noisy (NLL
+periodically spiked to 1.2–1.4), suggesting a learning rate schedule
+would improve convergence.</p>
+<p><strong>Finding 4 : <span class="math inline">\Omega</span> Alone
+Cannot Beat Dead Init:</strong> At NLL=1.386, the model predicts
+uniformly, so the final-timestep gradient magnitude is near zero. The
+<span class="math inline">\Omega</span> regularizer preserves gradient
+<em>ratios</em> but cannot amplify absolute magnitude from near-zero.
+Only when initial weights are set with <code>smart_tanh</code> to <span
+class="math inline">\rho=0.95</span> (EC experiments all use this) can
+the gradient signal bootstrap itself.</p>
+<hr />
+<h2 id="conclusions">7. Conclusions</h2>
+<ol type="1">
+<li><p><strong>Exploding gradients</strong> (A1): Without clipping, RNN
+spectral radius grows unboundedly (<span class="math inline">\rho \to
+1732</span>), causing complete hidden state saturation and training
+failure.</p></li>
+<li><p><strong>Gradient clipping</strong> (A2, A3): Clipping stabilizes
+<span class="math inline">\rho</span> near 1.1, eliminates saturation,
+but is insufficient for very long-range dependencies, gradients remain
+too small (<span class="math inline">\log_{10}(g_t) \approx
+-4.5</span>).</p></li>
+<li><p><strong>GRU gating</strong> (A4, A5): Prevents saturation without
+clipping, but introduces stronger gradient vanishing (<span
+class="math inline">\log_{10}(g_t) \approx -6.3</span> no-clip). With
+clipping, GRU is the most stable architecture. Z-gate learns to
+predominantly retain state (<span class="math inline">d(z) \to
+0</span>), consistent with a memory-heavy task.</p></li>
+<li><p><strong>Regression task</strong> (B1, B2): Both architectures
+partially succeed (~25% error). Smoother loss landscape prevents
+spectral explosion even without clipping. GRU minimally better due to
+bounded effective spectral radius.</p></li>
+</ol>
+<p><strong>Extra Credit Breakthrough Experiments (EC7,
+EC9):</strong></p>
+<h4 id="ec7-successfully-solved-short-sequences">EC7: Successfully
+Solved (Short Sequences)</h4>
+<p>EC7 used sequences of length 20–50 and <code>nhid=100</code>. It
+achieved 0% validation error within 10,000 steps.</p>
+<p align="center">
+<img src="extra/figures/EC7_grad_histogram.png" alt="EC7 Grad" width="48%" />
+<img src="extra/figures/EC7_sat_histogram.png" alt="EC7 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="extra/figures/EC7_valid_error.png" alt="EC7 Validation" width="48%" />
+<img src="extra/figures/EC7_rho.png" alt="EC7 Rho" width="48%" />
+</p>
+<h4 id="ec9-partial-success-long-sequences">EC9: Partial Success (Long
+Sequences)</h4>
+<p>EC9 used full-length sequences (50–200) and
+<code>nhid=500, bs=200</code>. It reached NLL=0.75 and 3.89% validation
+error.</p>
+<p align="center">
+<img src="extra/figures/EC9_grad_histogram.png" alt="EC9 Grad" width="48%" />
+<img src="extra/figures/EC9_sat_histogram.png" alt="EC9 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="extra/figures/EC9_valid_error.png" alt="EC9 Validation" width="48%" />
+<img src="extra/figures/EC9_rho.png" alt="EC9 Rho" width="48%" />
+</p>
+<p>The Pascanu SGD-CR method (smart_tanh init + <span
+class="math inline">\Omega</span> reg + clipping) successfully breaks
+through the NLL=1.386 floor. Short sequences are fully solvable (0%
+error, EC7). Full-length sequences require scaling up model capacity and
+batch size (EC9, 3.89% error).</p>
+<hr />
+<h2 id="appendix-all-figures">8. Appendix: All Figures</h2>
+<h3 id="a1-baseline-rnn-no-clip">A1: Baseline RNN (No Clip)</h3>
+<p align="center">
+<img src="PA2_code/figures/A1_grad_histogram.png" alt="A1 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A1_sat_histogram.png" alt="A1 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A1_valid_error.png" alt="A1 Validation" width="48%" />
+<img src="PA2_code/figures/A1_rho.png" alt="A1 Rho" width="48%" />
+</p>
+<h3 id="a2-rnn-clip0.05">A2: RNN Clip=0.05</h3>
+<p align="center">
+<img src="PA2_code/figures/A2_grad_histogram.png" alt="A2 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A2_sat_histogram.png" alt="A2 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A2_valid_error.png" alt="A2 Validation" width="48%" />
+<img src="PA2_code/figures/A2_rho.png" alt="A2 Rho" width="48%" />
+</p>
+<h3 id="a3-rnn-clip0.01">A3: RNN Clip=0.01</h3>
+<p align="center">
+<img src="PA2_code/figures/A3_grad_histogram.png" alt="A3 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A3_sat_histogram.png" alt="A3 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A3_valid_error.png" alt="A3 Validation" width="48%" />
+<img src="PA2_code/figures/A3_rho.png" alt="A3 Rho" width="48%" />
+</p>
+<h3 id="a4-gru-no-clip">A4: GRU (No Clip)</h3>
+<p align="center">
+<img src="PA2_code/figures/A4_grad_histogram.png" alt="A4 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A4_sat_histogram.png" alt="A4 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A4_valid_error.png" alt="A4 Validation" width="48%" />
+<img src="PA2_code/figures/A4_rho.png" alt="A4 Rho" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A4_gate_z_sat.png" alt="A4 Z-Gate" width="48%" />
+<img src="PA2_code/figures/A4_gate_r_sat.png" alt="A4 R-Gate" width="48%" />
+</p>
+<h3 id="a5-gru-clip0.05">A5: GRU Clip=0.05</h3>
+<p align="center">
+<img src="PA2_code/figures/A5_grad_histogram.png" alt="A5 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/A5_sat_histogram.png" alt="A5 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A5_valid_error.png" alt="A5 Validation" width="48%" />
+<img src="PA2_code/figures/A5_rho.png" alt="A5 Rho" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/A5_gate_z_sat.png" alt="A5 Z-Gate" width="48%" />
+<img src="PA2_code/figures/A5_gate_r_sat.png" alt="A5 R-Gate" width="48%" />
+</p>
+<h3 id="b1-rnn-multiplication-no-clip">B1: RNN Multiplication (No
+Clip)</h3>
+<p align="center">
+<img src="PA2_code/figures/B1_grad_histogram.png" alt="B1 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/B1_sat_histogram.png" alt="B1 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/B1_valid_error.png" alt="B1 Validation" width="48%" />
+<img src="PA2_code/figures/B1_rho.png" alt="B1 Rho" width="48%" />
+</p>
+<h3 id="b2-gru-multiplication-no-clip">B2: GRU Multiplication (No
+Clip)</h3>
+<p align="center">
+<img src="PA2_code/figures/B2_grad_histogram.png" alt="B2 Gradient Histogram" width="48%" />
+<img src="PA2_code/figures/B2_sat_histogram.png" alt="B2 Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/B2_valid_error.png" alt="B2 Validation" width="48%" />
+<img src="PA2_code/figures/B2_rho.png" alt="B2 Rho" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/B2_gate_z_sat.png" alt="B2 Z-Gate" width="48%" />
+<img src="PA2_code/figures/B2_gate_r_sat.png" alt="B2 R-Gate" width="48%" />
+</p>
+<h3 id="comparison-plots">Comparison Plots</h3>
+<h4 id="task-1-memorization-comparison">Task 1: Memorization
+Comparison</h4>
+<p align="center">
+<img src="PA2_code/figures/CMP_all_mem_valid_error.png" alt="All Mem Valid" width="48%" />
+<img src="PA2_code/figures/CMP_rnn_clip_valid_error.png" alt="RNN Clipping Comparison - Valid" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/CMP_rnn_clip_grad_hist.png" alt="RNN Clipping Comparison - Grad" width="48%" />
+<img src="PA2_code/figures/CMP_rnn_clip_sat_hist.png" alt="RNN Clipping Comparison - Saturation" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/CMP_rnn_clip_rho.png" alt="RNN Clipping Comparison - Rho" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/CMP_gru_clip_valid_error.png" alt="GRU Clipping Comparison - Valid" width="48%" />
+<img src="PA2_code/figures/CMP_gru_clip_grad_hist.png" alt="GRU Clipping Comparison - Grad" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/CMP_rnn_vs_gru_noclip_valid.png" alt="RNN vs GRU No-Clip Valid" width="48%" />
+<img src="PA2_code/figures/CMP_rnn_vs_gru_noclip_grad.png" alt="RNN vs GRU No-Clip Grad" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/CMP_rnn_vs_gru_noclip_rho.png" alt="RNN vs GRU No-Clip Rho" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/CMP_rnn_vs_gru_clip_valid.png" alt="RNN vs GRU Clip Valid" width="48%" />
+</p>
+<h4 id="task-2-multiplication-comparison">Task 2: Multiplication
+Comparison</h4>
+<p align="center">
+<img src="PA2_code/figures/CMP_mul_rnn_vs_gru_valid.png" alt="Mul RNN vs GRU Valid" width="48%" />
+<img src="PA2_code/figures/CMP_mul_rnn_vs_gru_grad.png" alt="Mul RNN vs GRU Grad" width="48%" />
+</p>
+<p align="center">
+<img src="PA2_code/figures/CMP_mul_rnn_vs_gru_rho.png" alt="Mul RNN vs GRU Rho" width="48%" />
+</p>
+<hr />
+<h2 id="ai-tool-disclosure">9. AI Tool Disclosure</h2>
+<p>As per the mandatory disclosure policy (Section 10.6):</p>
+<p>This assignment was completed with AI assistance (<strong>Google
+Gemini</strong> and <strong>ChatGPT</strong>) used for: - Conceptual
+clarification of gradient flow diagnostics - Structuring the
+experimental pipeline (run scripts, plotting utilities)</p>
+<h3 id="ai-disclosure-links">AI Disclosure Links:</h3>
+<ul>
+<li>ChatGPT Chat 1:
+https://chatgpt.com/share/69b30199-a418-8006-b1e3-56ae88eb541a</li>
+<li>ChatGPT Chat 2:
+https://chatgpt.com/share/69b30178-bf30-8006-87e8-0dacca5fe56a</li>
+</ul>
+<p>Per the assignment policy: <em>“AI tools are for conceptual help
+only; code generation is prohibited.”</em> The core RNN/GRU
+implementation (<code>model.py</code>) and training diagnostics
+(<code>train.py</code>) were reviewed and understood in full by the
+student.</p>
+<hr />
+<p><em>End of Report</em></p>
+</body>
+</html>

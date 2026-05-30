@@ -1,0 +1,2 @@
+best_d,oov_mode,test_acc,test_macro_f1,best_dev_macro_f1
+200,affix,0.8253041886508022,0.10292297501114996,0.10689772232145929

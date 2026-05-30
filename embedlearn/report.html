@@ -1,0 +1,348 @@
+<h1 id="programming-assignment-1-report">Programming Assignment 1
+Report</h1>
+<p><em>Generated draft: 2026-02-14 03:12</em></p>
+<hr />
+<h2 id="executive-summary">1. Executive Summary</h2>
+<p>This report compares unsupervised word embedding methods (GloVe
+vs. SVD) trained on a provided CC-News subset and evaluates their
+effectiveness on Named Entity Recognition (NER) using CoNLL-2003. We
+also compare against a CRF baseline using hand-crafted
+lexical/shape/subword features.</p>
+<p>Best MLP configuration (by test Macro-F1): <strong>GLOVE</strong>,
+<strong>d=300</strong>, test Macro-F1=0.3937023592717927, test
+Acc=0.8617206848282546.</p>
+<hr />
+<h2 id="data-evaluation-protocol">2. Data &amp; Evaluation Protocol</h2>
+<ul>
+<li><p><strong>Unsupervised training data:</strong> Provided CC-News
+subset (~67k documents) and provided vocabulary (~25k tokens).</p></li>
+<li><p><strong>Constraint:</strong> GloVe and SVD training performed
+only on provided vocabulary (OOV ignored during training).</p></li>
+<li><p><strong>NER data:</strong> CoNLL-2003 (train/validation/test
+splits as provided).</p></li>
+<li><p><strong>Metrics:</strong> Token-level Accuracy and Macro-F1;
+final metrics reported on <strong>test</strong> split.</p></li>
+</ul>
+<hr />
+<h2 id="task-1-glove-pre-training">3. Task 1 — GloVe Pre-training</h2>
+<h3 id="objective-and-setup">3.1 Objective and Setup</h3>
+<p>GloVe is trained using a weighted least-squares objective on a global
+word–word co-occurrence matrix built with a context window
+<code>w</code>.</p>
+<h3 id="hyperparameter-search-fixed-d200">3.2 Hyperparameter Search
+(fixed d=200)</h3>
+<p>Search results:</p>
+<table>
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr>
+<th>w</th>
+<th>lr</th>
+<th>iters</th>
+<th>x_max</th>
+<th>alpha</th>
+<th>final_loss</th>
+<th>total_train_s</th>
+<th>nnz</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>0.025</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.03230632371989255</td>
+<td>1936.5457620620728</td>
+<td>7249560</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.01</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.03413386779517426</td>
+<td>1931.5652570724487</td>
+<td>7249560</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.005</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.046281528433162585</td>
+<td>1938.0983037948608</td>
+<td>7249560</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.025</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.03880991018813584</td>
+<td>3986.3844265937805</td>
+<td>14991490</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.01</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.03692408292896721</td>
+<td>3990.2024261951447</td>
+<td>14991490</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.005</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.041410241958888774</td>
+<td>3983.4831500053406</td>
+<td>14991490</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.025</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.03969762908673617</td>
+<td>6057.036014556885</td>
+<td>22583676</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.01</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.037169590137854695</td>
+<td>6071.296098232269</td>
+<td>22583676</td>
+</tr>
+<tr>
+<td>10</td>
+<td>0.005</td>
+<td>30</td>
+<td>100.0</td>
+<td>0.75</td>
+<td>0.03936383268943316</td>
+<td>6891.406728029251</td>
+<td>22583676</td>
+</tr>
+</tbody>
+</table>
+<h3 id="loss-curves">3.3 Loss Curves</h3>
+<figure>
+<img src="assets\glove_loss_w10_d200_lr0.005.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w10_d200_lr0.01.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w10_d200_lr0.025.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w2_d200_lr0.005.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w2_d200_lr0.01.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w2_d200_lr0.025.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w2_d200_lr0.05.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w5_d200_lr0.005.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w5_d200_lr0.01.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w5_d200_lr0.025.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<figure>
+<img src="assets\glove_loss_w5_d200_lr0.05.png"
+alt="GloVe Loss Curve" />
+<figcaption aria-hidden="true">GloVe Loss Curve</figcaption>
+</figure>
+<h3 id="nearest-neighbors-top-5">3.4 Nearest Neighbors (Top-5)</h3>
+<p>Words used (must match Task 2): <strong>united, city,
+president</strong></p>
+<p><em>Paste your printed neighbor lists from task_1.py here (Top-5 for
+each word).</em></p>
+<hr />
+<h2 id="task-2-svd-pipeline">4. Task 2 — SVD Pipeline</h2>
+<p>SVD is applied to a sparse term-document matrix X. Token
+representations are computed as <span
+class="math inline"><em>U</em><sub><em>k</em></sub><em>Σ</em><sub><em>k</em></sub></span>.</p>
+<h3 id="nearest-neighbors-top-5-1">4.1 Nearest Neighbors (Top-5)</h3>
+<p>Same 3 words as Task 1: <strong>united, city, president</strong></p>
+<p><em>Paste your printed neighbor lists from task_2.py here (Top-5 for
+each word).</em></p>
+<hr />
+<h2 id="task-3-crf-baseline-feature-engineering">5. Task 3 — CRF
+Baseline (Feature Engineering)</h2>
+<h3 id="feature-set">5.1 Feature Set</h3>
+<p><em>List every feature included in the CRF here (copy from your
+implementation).</em></p>
+<h3 id="test-results-and-feature-importance">5.2 Test Results and
+Feature Importance</h3>
+<p><em>Paste test Accuracy, Macro-F1, and top weighted CRF features here
+(from task_3.py output).</em></p>
+<hr />
+<h2 id="task-4-mlp-feature-learning-with-embeddings">6. Task 4 — MLP
+(Feature Learning with Embeddings)</h2>
+<h3 id="architecture">6.1 Architecture</h3>
+<p>MLP takes a single token embedding as input and predicts one of 9 NER
+tags.</p>
+<h3 id="oov-strategy">6.2 OOV Strategy</h3>
+<p><em>Describe and justify your OOV strategy (e.g., longest
+prefix/suffix match → <UNK> fallback).</em></p>
+<h3 id="results-table-all-runs">6.3 Results Table (All Runs)</h3>
+<table style="width:100%;">
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+</colgroup>
+<thead>
+<tr>
+<th>algo</th>
+<th>d</th>
+<th>oov_mode</th>
+<th>test_acc</th>
+<th>test_macro_f1</th>
+<th>best_dev_macro_f1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>glove</td>
+<td>50</td>
+<td>affix</td>
+<td>0.829762032949284</td>
+<td>0.13005777932834406</td>
+<td>0.1370765840563632</td>
+</tr>
+<tr>
+<td>glove</td>
+<td>100</td>
+<td>affix</td>
+<td>0.833616883816087</td>
+<td>0.15317088844312904</td>
+<td>0.1641526359096762</td>
+</tr>
+<tr>
+<td>glove</td>
+<td>200</td>
+<td>affix</td>
+<td>0.8496823516743836</td>
+<td>0.2737348763782632</td>
+<td>0.30005442394357007</td>
+</tr>
+<tr>
+<td>glove</td>
+<td>300</td>
+<td>affix</td>
+<td>0.8617206848282546</td>
+<td>0.3937023592717927</td>
+<td>0.41428247802986434</td>
+</tr>
+<tr>
+<td>svd</td>
+<td>50</td>
+<td>affix</td>
+<td>0.8253472596102078</td>
+<td>0.10086394219306578</td>
+<td>0.10380914859720554</td>
+</tr>
+<tr>
+<td>svd</td>
+<td>100</td>
+<td>affix</td>
+<td>0.8253687950899107</td>
+<td>0.10218609921314135</td>
+<td>0.10498975150492013</td>
+</tr>
+<tr>
+<td>svd</td>
+<td>200</td>
+<td>affix</td>
+<td>0.8251965112522881</td>
+<td>0.10310935439002292</td>
+<td>0.10733608897190824</td>
+</tr>
+<tr>
+<td>svd</td>
+<td>300</td>
+<td>affix</td>
+<td>0.8253472596102078</td>
+<td>0.10320772534351698</td>
+<td>0.10730401210399793</td>
+</tr>
+</tbody>
+</table>
+<h3 id="best-configuration-and-comparison-vs-crf">6.4 Best Configuration
+and Comparison vs CRF</h3>
+<p>Best MLP: <strong>GLOVE</strong>, d=300, test
+Macro-F1=0.3937023592717927, test Acc=0.8617206848282546.</p>
+<p><em>Compare the best MLP vs CRF and explain why one outperformed the
+other.</em></p>
+<hr />
+<h2 id="task-5-extra-credit-tf-idf-svd">7. Task 5 — Extra Credit (TF-IDF
++ SVD)</h2>
+<h3 id="quality-check-1-neighbors-raw-vs-tf-idf">7.1 Quality Check 1:
+Neighbors (Raw vs TF-IDF)</h3>
+<p>Words: <strong>city, run, music, london, market</strong></p>
+<p><em>See CSV:
+<code>assets\task5_neighbors_raw_vs_tfidf.csv</code></em></p>
+<h3 id="quality-check-2-mlp-using-tf-idf-svd-vectors">7.2 Quality Check
+2: MLP using TF-IDF SVD vectors</h3>
+<p><em>See CSV: <code>assets\task5_tfidf_mlp_metrics.csv</code></em></p>
+<hr />
+<h2 id="genai-usage-disclosure">8. GenAI Usage Disclosure</h2>
+<p>This project used an LLM assistant during implementation. Per course
+policy, the usage is disclosed here with shareable links.</p>
+<p><em>Add shareable chat links here before submitting.</em></p>
