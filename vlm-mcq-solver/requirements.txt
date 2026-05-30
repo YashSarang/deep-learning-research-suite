@@ -1,0 +1,28 @@
+# Requirements — L40s (48 GB VRAM) Optimized Build
+# Qwen2.5-VL-72B-Instruct via BitsAndBytes NF4 quantization
+
+# ── Core VLM stack ────────────────────────────────────────────────────────────
+transformers>=4.49.0          # Qwen2.5-VL support (Qwen2_5_VLForConditionalGeneration)
+accelerate>=0.30.0
+bitsandbytes>=0.43.0          # NF4 quantization + BF16 compute
+qwen-vl-utils>=0.0.8          # process_vision_info() for Qwen2.5-VL
+
+# ── Flash Attention 2 (must be installed separately with CUDA) ────────────────
+# Install manually: pip install flash-attn --no-build-isolation
+# Or pre-built wheel: https://github.com/Dao-AILab/flash-attention/releases
+# flash-attn>=2.5.0
+
+# ── Fallback Solvers ──────────────────────────────────────────────────────────
+sympy>=1.12
+numpy>=1.26.4
+faiss-cpu>=1.8.0              # CPU FAISS for offline retrieval index lookup
+sentence-transformers>=2.7.0
+
+# ── Data & Utilities ─────────────────────────────────────────────────────────
+Pillow>=10.3.0
+PyYAML>=6.0.1
+tqdm>=4.66.4
+pandas>=2.2.2
+
+# ── HuggingFace (download scripts only, not needed at inference) ──────────────
+huggingface-hub>=0.22.0

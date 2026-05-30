@@ -1,0 +1,45 @@
+# RemoteSense-TransferBench Dependencies
+
+# Core ML libraries
+torch>=2.0.0
+torchvision>=0.15.0
+timm>=0.9.0
+numpy>=1.21.0
+pillow>=9.0.0
+
+# Configuration & Experiment Management
+hydra-core>=1.3.0
+omegaconf>=2.3.0
+mlflow>=2.9.0
+wandb>=0.16.0  # Optional: Weights & Biases integration
+
+# Data & Augmentation
+albumentations>=1.3.0
+opencv-python>=4.7.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+scikit-learn>=1.3.0  # For t-SNE, confusion matrix
+
+# Utilities
+tqdm>=4.65.0
+pyyaml>=6.0
+tensorboard>=2.12.0
+rich>=13.3.0  # Pretty terminal output
+
+# Testing & Quality
+pytest>=7.3.0
+pytest-cov>=4.1.0
+black>=23.3.0
+isort>=5.12.0
+flake8>=6.0.0
+
+# Documentation
+sphinx>=6.2.0
+sphinx-rtd-theme>=1.2.0
+
+# Optional: Performance
+nvidia-ml-py3>=7.352.0  # GPU monitoring
+psutil>=5.9.0  # System monitoring

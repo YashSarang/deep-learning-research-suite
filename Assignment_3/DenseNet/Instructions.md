@@ -1,0 +1,100 @@
+# Assignment 3: Initialization & Reviewer Guidelines
+
+Thank you for reviewing this submission for **Assignment 3: Retrieval, Attention & Architectures**.
+
+To satisfy the highest rigor of this assignment, **three distinct implementations** of the DenseNet architecture have been engineered and evaluated. This repository cleanly segregates these implementations to demonstrate from-scratch capability, modern framework parity, and legacy replication.
+
+---
+
+## The Three Implementations
+
+### 1. The Original CVPR 2017 Lua Implementation (Torch7)
+### Please run this (official Lua version) in Windows only, since there are many steps to undergo to get it working on other operating systems.
+> **Location**: `Densenet_Lua/` · **Runner**: `run_lua_official.ps1`
+
+This is the exact, unaltered code released by the original authors (G. Huang, Z. Liu, et al.) when the paper was published.
+
+- **The Challenge**: Torch7 is completely deprecated, requires CUDA 8.0, and the original S3 data bucket for CIFAR-10 dumps is dead.
+- **The Solution**: A custom data extractor (`export_cifar10_for_lua.py`) converts modern PyTorch CIFAR-10 data into the binary `.bin` format expected by the 2017 code. Execution is isolated inside a GPU-passthrough Docker container (`nagadomi/torch7:latest`).
+- **To Run**: Open PowerShell (or `pwsh` on Linux/macOS) and execute:
+  ```powershell
+  .\run_lua_official.ps1        # Windows
+  pwsh ./run_lua_official.ps1   # Linux / macOS
+  ```
+- *Note: A 100-epoch run takes approximately 3 hours. Native Lua logs are printed to stdout.*
+
+#### Docker Prerequisites (by OS)
+
+| OS | Requirement |
+|---|---|
+| **Windows** | Docker Desktop running with Linux containers enabled (WSL2 engine recommended) |
+| **Linux** | Docker daemon running (`sudo systemctl start docker`) + [`nvidia-container-toolkit`](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html) for GPU support |
+| **macOS** | Docker Desktop running — **however**, macOS has no NVIDIA GPU passthrough support (`--gpus all` is unsupported). The CUDA 8.0 container will fail without a GPU. A Linux machine or cloud GPU instance is required. |
+
+---
+
+### 2. The Official PyTorch Implementation
+> **Location**: `train.py` · **Flag**: `--model pytorch_official`
+
+Because the original Lua framework is deprecated, the authors officially endorsed a PyTorch port (`torchvision.models.densenet121`).
+
+- **The Challenge**: The standard `densenet121` is designed for 224×224 ImageNet input; if used naively on 32×32 CIFAR-10, the feature maps collapse.
+- **The Solution**: `train.py` modifies the stem at runtime — replacing the 7×7 stride-2 conv with a 3×3 stride-1 conv and stripping the initial pooling layer — preserving spatial resolution for CIFAR-10.
+- **To Run**:
+  ```bash
+  python train.py --model pytorch_official --epochs 100
+  ```
+
+---
+
+### 3. Custom "From-Scratch" Implementation
+> **Location**: `model.py` · **Flag**: `--model scratch`
+
+A fully custom PyTorch replication built exclusively for this coursework. Constructs `DenseBlock` and `Transition` layers natively, using `torch.utils.checkpoint` for memory optimization as emphasised in the assignment specifications.
+
+- **Memory Efficiency**: Footprint stays ~1.1 GB VRAM by discarding intermediate feature maps and recomputing them during the backward pass.
+- **To Run**:
+  ```bash
+  python train.py --model scratch --epochs 100
+  ```
+
+---
+
+## Executing the Full Pipeline
+
+`run_all.ps1` trains the **scratch** and **pytorch_official** models sequentially and then optionally generates a comparison report. The Lua implementation is deliberately kept separate in `run_lua_official.ps1` due to its Docker dependency.
+
+### Requirements
+
+```bash
+pip install torch torchvision matplotlib
+```
+
+> **CUDA**: A CUDA-capable NVIDIA GPU is strongly recommended. Training on CPU is possible but very slow.  
+> **Python**: Python 3.8+ required. On Linux/macOS, if your shell maps `python` to Python 2, use `python3` and create an alias or symlink.
+
+### Running the Pipeline
+
+```powershell
+.\run_all.ps1        # Windows (PowerShell)
+pwsh ./run_all.ps1   # Linux / macOS (PowerShell Core)
+```
+
+The script performs the following pre-flight checks before training begins:
+- Verifies `python` is available on PATH
+- Detects CUDA availability and warns (but does not abort) if no GPU is found
+
+*(Modify the `--epochs 1` flags inside `run_all.ps1` to `--epochs 100` to replicate the full reported results.)*
+
+---
+
+## Reading the Results
+
+| File | Description |
+|---|---|
+| `output.md` | Full terminal logs for a 100-epoch run, beautifully formatted |
+| `history_scratch.json` | Per-epoch loss and accuracy for the from-scratch model |
+| `history_pytorch_official.json` | Per-epoch loss and accuracy for the PyTorch official model |
+| `history_lua_official.json` | Per-epoch metrics from the Lua/Torch7 run (pre-generated) |
+| `assignment_3_metrics.png` | Comparative graphs (loss curves, accuracy bounds) — auto-generated by `generate_report.py` |
+| `Final_report.pdf` | Final written report with analysis and conclusions |

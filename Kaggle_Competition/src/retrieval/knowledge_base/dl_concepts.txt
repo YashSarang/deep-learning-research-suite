@@ -1,0 +1,114 @@
+Deep Learning Concepts Knowledge Base
+
+=== FUNDAMENTALS ===
+Deep learning is a subset of machine learning that uses neural networks with multiple layers to learn representations from data.
+A neural network consists of layers of neurons (nodes) connected by weighted edges.
+Forward propagation computes the output of the network given an input.
+Backward propagation (backpropagation) computes gradients of the loss with respect to all parameters using the chain rule.
+Gradient descent updates parameters in the direction that minimises the loss function.
+Stochastic Gradient Descent (SGD) updates parameters using one random sample at a time.
+Mini-batch gradient descent updates parameters using a small batch of samples.
+
+=== ACTIVATION FUNCTIONS ===
+ReLU (Rectified Linear Unit): f(x) = max(0, x). Derivative = 1 if x > 0, else 0.
+Sigmoid: f(x) = 1/(1+e^(-x)). Derivative = sigma(x)(1 - sigma(x)).
+Tanh: f(x) = (e^x - e^(-x)) / (e^x + e^(-x)). Derivative = 1 - tanh(x)^2.
+Softmax: converts logits to probabilities that sum to 1. Used in multi-class output layers.
+Leaky ReLU: f(x) = max(alpha*x, x) where alpha is a small constant (e.g. 0.01).
+GELU (Gaussian Error Linear Unit): smooth approximation of ReLU, used in transformers.
+Swish: f(x) = x * sigmoid(x).
+
+=== LOSS FUNCTIONS ===
+Cross-entropy loss: L = -sum(y_true * log(y_pred)). Used for classification.
+Binary cross-entropy: L = -(y*log(p) + (1-y)*log(1-p)).
+Mean Squared Error (MSE): L = (1/n) * sum((y - y_hat)^2). Used for regression.
+Mean Absolute Error (MAE): L = (1/n) * sum(|y - y_hat|).
+Huber loss: combination of MSE and MAE; less sensitive to outliers.
+Hinge loss: used in SVM classifiers.
+KL Divergence: measures difference between two probability distributions.
+
+=== OPTIMISERS ===
+SGD with momentum: adds a velocity term to smooth gradient updates.
+Adam: adaptive learning rates using first and second moments of gradients. m = beta1*m + (1-beta1)*g; v = beta2*v + (1-beta2)*g^2.
+RMSprop: divides learning rate by moving average of squared gradients.
+AdaGrad: accumulates squared gradients; good for sparse data.
+AdamW: Adam with decoupled weight decay.
+Learning rate schedule: reducing learning rate over time (step decay, cosine annealing, warm-up).
+
+=== REGULARISATION ===
+L2 regularisation (weight decay): adds lambda*||W||^2 to loss. Penalises large weights.
+L1 regularisation: adds lambda*|W| to loss. Encourages sparsity.
+Dropout: randomly sets a fraction of activations to zero during training. Prevents co-adaptation.
+Batch Normalisation: normalises activations within a mini-batch. Reduces internal covariate shift.
+Layer Normalisation: normalises across features instead of batch. Used in Transformers.
+Data augmentation: artificially increases dataset size. Reduces overfitting.
+Early stopping: stops training when validation loss stops improving.
+
+=== VANISHING & EXPLODING GRADIENTS ===
+Vanishing gradient: gradients become very small in deep networks, slowing training of early layers.
+ReLU helps mitigate vanishing gradients since its derivative is either 0 or 1.
+Exploding gradient: gradients grow exponentially. Solved by gradient clipping.
+Gradient clipping: clip gradient norm to a maximum value (e.g. 1.0).
+Residual connections (skip connections) in ResNets allow gradients to flow directly to earlier layers.
+
+=== CONVOLUTIONAL NEURAL NETWORKS ===
+Convolution: applies a learnable filter to extract local features.
+Pooling: reduces spatial dimensions. Max pooling takes the maximum in a window.
+Stride: step size of convolution. Stride > 1 reduces spatial dimensions.
+Padding: adding zeros around input to control output size.
+Number of parameters in a conv layer: (kernel_h * kernel_w * in_channels + 1) * out_channels.
+Receptive field: region of input image that influences one output neuron.
+Weight sharing: the same filter weights are applied across all spatial positions.
+Depthwise separable convolution: factorises conv into depthwise + pointwise operations (used in MobileNet).
+
+=== RECURRENT NEURAL NETWORKS ===
+RNN: processes sequential data by maintaining a hidden state.
+Vanishing gradient in RNNs: makes it hard to capture long-range dependencies.
+LSTM (Long Short-Term Memory): uses gates (input, forget, output) to control information flow.
+GRU (Gated Recurrent Unit): simpler than LSTM with reset and update gates.
+Bidirectional RNN: processes sequence in both forward and backward directions.
+Sequence-to-sequence: encoder-decoder architecture for tasks like translation.
+
+=== TRANSFORMERS & ATTENTION ===
+Self-attention: computes attention between all pairs of positions in a sequence.
+Attention formula: Attention(Q, K, V) = softmax(Q*K^T / sqrt(d_k)) * V.
+Multi-head attention: runs multiple attention heads in parallel to capture different relationships.
+Positional encoding: adds position information to token embeddings using sine/cosine functions.
+Transformer consists of stacked encoder and decoder blocks with self-attention and feed-forward layers.
+BERT: bidirectional transformer encoder pre-trained with masked language modelling.
+GPT: unidirectional transformer decoder pre-trained with next token prediction.
+
+=== BATCH NORMALISATION ===
+Batch Norm formula: x_hat = (x - mean) / sqrt(variance + epsilon), then scale and shift: y = gamma * x_hat + beta.
+During training: mean and variance are computed over the mini-batch.
+During inference: running statistics (exponential moving average) are used.
+Batch Norm reduces internal covariate shift and allows higher learning rates.
+
+=== ENSEMBLE METHODS ===
+Bagging (Bootstrap Aggregating): train multiple models on random data subsets, average predictions. Reduces variance.
+Boosting: train models sequentially, each focusing on previous errors. Reduces bias.
+Dropout can be seen as an implicit ensemble of exponentially many sub-networks.
+
+=== EVALUATION METRICS ===
+Accuracy: fraction of correct predictions.
+Precision: TP / (TP + FP).
+Recall (Sensitivity): TP / (TP + FN).
+F1-score: harmonic mean of precision and recall.
+ROC-AUC: area under the receiver operating characteristic curve.
+Confusion matrix: tabulates TP, TN, FP, FN.
+
+=== HYPERPARAMETERS ===
+Learning rate: most important hyperparameter. Too high → divergence. Too low → slow convergence.
+Batch size: larger batches give more accurate gradient estimates but use more memory.
+Number of layers (depth): more layers can capture more complex features.
+Hidden units (width): more units increase model capacity.
+Dropout rate: fraction of activations dropped. Typical values: 0.2 to 0.5.
+
+=== TRAINING CONCEPTS ===
+Epoch: one full pass through the entire training dataset.
+Iteration: one gradient update step (one mini-batch).
+Overfitting: model performs well on training set but poorly on test set.
+Underfitting: model fails to capture the training data pattern.
+Bias-variance tradeoff: complex models have low bias but high variance.
+Transfer learning: use pre-trained weights from one task for a different (related) task.
+Fine-tuning: continue training a pre-trained model on new data with a small learning rate.

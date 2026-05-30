@@ -1,0 +1,39 @@
+Modern Deep Learning SOTA: Transformers and LLMs
+
+=== TRANSFORMER CORE SCALING ===
+BERT-Base: 12 layers, 768 hidden size, 12 attention heads, ~110M parameters.
+BERT-Large: 24 layers, 1024 hidden size, 16 attention heads, ~340M parameters.
+Equation: Attention heads $h$ divide the hidden size $d_{model}$ into $d_k = d_{model} / h$.
+Attention Complexity: $O(n^2d)$ for sequence length $n$ and dimension $d$ (Self-attention).
+
+=== LLM ARCHITECTURE DETAILS ===
+LLaMA/Llama 2: Uses RMSNorm instead of LayerNorm (removes mean centering), RoPE (Rotary Positional Embeddings), and SwiGLU activation functions ($ Swish(xW) * xV $).
+KV Cache: Stores Key and Value tensors for previous tokens during autoregressive generation to avoid redundant $O(n^2)$ attention computation.
+GQA (Grouped Query Attention): Multiple Query heads share one Key and Value head to reduce KV cache size and memory bandwidth.
+
+=== PEFT: PARAMETER-EFFICIENT FINE-TUNING ===
+LoRA (Low-Rank Adaptation):
+- Injects two low-rank matrices $A$ ($r \times d$) and $B$ ($d \times r$) into frozen MLP or Attention weights. 
+- Updated weights: $ W' = W + BA $.
+- Parameter reduction: $(2rd) / (d^2) = 2r/d$. For $d=4096, r=8$, only 0.4% training params.
+Adapter layers: Small bottleneck layers added sequentially after frozen transformer sub-layers.
+
+=== QUANTIZATION TECHNIQUES ===
+Post-Training Quantization (PTQ): Quantizes weights and/or activations after training (e.g., bitsandbytes, GPTQ).
+Quantization-Aware Training (QAT): Simulates quantization error during training to allow the model to adapt.
+NF4 (NormalFloat 4): Quantization format optimized for normally distributed weights (used in QLoRA).
+VRAM for Inference: 
+- FP16/BF16: 2 bytes per parameter. 
+- INT8: 1 byte per parameter.
+- INT4: 0.5 bytes per parameter. 
+- Calculation for 70B model in 4-bit: $ 70B * 0.5 \approx 35 GB $ VRAM.
+
+=== VISION-LANGUAGE MODELS (VLMs) ===
+BLIP-2 / Flamingo: Uses a Q-Former to bridge a frozen Vision Encoder (ViT) and a frozen LLM.
+Qwen-VL / LLaVA: Directly projects frozen ViT features into the LLM token space.
+Document Understanding: Modern VLMs are optimized for high-resolution images to read small text/math (OCR-free).
+
+=== RLHF: REINFORCEMENT LEARNING FROM HUMAN FEEDBACK ===
+Stages: 1. SFT (Supervised Fine-Tuning), 2. Reward Model training on ranked pairs, 3. PPO (Proximal Policy Optimization) against the reward model.
+DPO (Direct Preference Optimization): Skips the reward model stage by directly optimizing the policy model using preference data (log-ratio likelihood).
+Refusal: "As an AI language model..." occurs when the safety filter is triggered during PPO/DPO.

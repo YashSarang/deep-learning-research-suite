@@ -1,0 +1,137 @@
+Deep Learning Mathematical Formulas Reference
+
+=== ACTIVATION FUNCTION DERIVATIVES ===
+sigmoid(x) = 1 / (1 + exp(-x))
+d/dx sigmoid(x) = sigmoid(x) * (1 - sigmoid(x))
+
+tanh(x) = (exp(x) - exp(-x)) / (exp(x) + exp(-x))
+d/dx tanh(x) = 1 - tanh(x)^2
+
+ReLU(x) = max(0, x)
+d/dx ReLU(x) = 1 if x > 0 else 0
+
+Leaky ReLU(x) = max(alpha*x, x)
+d/dx Leaky ReLU(x) = 1 if x > 0 else alpha
+
+softmax(x_i) = exp(x_i) / sum_j(exp(x_j))
+d/dx softmax(x_i, x_j) = p_i * (delta_ij - p_j)  [Jacobian]
+
+=== LOSS FUNCTION DERIVATIVES ===
+MSE = (1/n) * sum((y - y_hat)^2)
+d/d(y_hat) MSE = (2/n) * (y_hat - y) = 2 * (y_hat - y)  [per sample]
+
+Binary Cross-Entropy = -(y*log(p) + (1-y)*log(1-p))
+d/dp BCE = -(y/p) + (1-y)/(1-p) = (p - y) / (p*(1-p))
+
+Cross-Entropy = -sum(y_i * log(p_i))
+Gradient with softmax output: d/d(logit_i) = p_i - y_i  [combined]
+
+=== NETWORK PARAMETER COUNTING ===
+Fully connected layer (units_in -> units_out):
+  parameters = units_in * units_out + units_out  (weights + biases)
+
+Conv2D layer (H_k, W_k kernel, C_in channels, C_out filters):
+  parameters = (H_k * W_k * C_in + 1) * C_out
+
+Embedding layer (vocab_size, embed_dim):
+  parameters = vocab_size * embed_dim
+
+=== CONVOLUTION OUTPUT SIZE ===
+Output size = floor((input_size + 2*padding - kernel_size) / stride) + 1
+
+=== FLOPS CALCULATION ===
+Forward pass FLOPs for conv layer:
+  FLOPs = 2 * C_in * H_k * W_k * H_out * W_out * C_out
+  (multiply-add counted as 2 ops)
+
+Fully connected layer FLOPs:
+  FLOPs = 2 * input_size * output_size
+
+=== ATTENTION MECHANISM ===
+Q = X * W_Q,  K = X * W_K,  V = X * W_V
+Attention(Q, K, V) = softmax(Q * K^T / sqrt(d_k)) * V
+
+Complexity of self-attention: O(n^2 * d) where n = sequence length, d = dimension
+
+=== BATCH NORMALISATION ===
+mu = (1/m) * sum(x_i)
+sigma^2 = (1/m) * sum((x_i - mu)^2)
+x_hat = (x - mu) / sqrt(sigma^2 + epsilon)
+y = gamma * x_hat + beta
+
+=== OPTIMISER UPDATES ===
+SGD: theta = theta - lr * gradient
+
+SGD with momentum (beta):
+  v = beta * v + (1 - beta) * gradient
+  theta = theta - lr * v
+
+Adam:
+  m = beta1 * m + (1 - beta1) * g         [first moment]
+  v = beta2 * v + (1 - beta2) * g^2       [second moment]
+  m_hat = m / (1 - beta1^t)               [bias corrected]
+  v_hat = v / (1 - beta2^t)               [bias corrected]
+  theta = theta - lr * m_hat / (sqrt(v_hat) + epsilon)
+  Typical: beta1=0.9, beta2=0.999, epsilon=1e-8
+
+RMSprop:
+  v = rho * v + (1 - rho) * g^2
+  theta = theta - lr * g / (sqrt(v) + epsilon)
+
+=== REGULARISATION ===
+L2 regularised loss: L_total = L + (lambda/2) * ||W||^2
+L2 gradient addition: gradient += lambda * W
+
+L1 regularised loss: L_total = L + lambda * sum(|w_i|)
+L1 gradient addition: gradient += lambda * sign(W)
+
+=== DROPOUT ===
+Expected output during training (mask M with p_keep):
+  z_dropped = (1/p_keep) * M * z  [inverted dropout]
+During inference: no dropout, use full weights
+
+=== RECEPTIVE FIELD (STACK OF CONVOLUTIONS) ===
+Receptive field after L conv layers with kernel size k and stride 1:
+  RF = 1 + L * (k - 1)
+
+=== WEIGHT INITIALISATION ===
+Xavier/Glorot: std = sqrt(2 / (fan_in + fan_out))
+He/Kaiming:    std = sqrt(2 / fan_in)  [for ReLU]
+
+=== BACKPROPAGATION (CHAIN RULE) ===
+dL/dW = dL/d(out) * d(out)/d(W)
+dL/dx = dL/d(out) * d(out)/d(x)  [for input gradient]
+
+=== SOFTMAX + CROSS-ENTROPY COMBINED GRADIENT ===
+Let p = softmax(logits), y = one-hot labels
+dL/d(logit_i) = p_i - y_i  [very clean result]
+
+=== DEPTHWISE SEPARABLE CONVOLUTION PARAMETERS ===
+Standard Conv: (k * k * C_in + 1) * C_out
+Depthwise Separable: (k * k * C_in) + (C_in * C_out)
+Reduction factor: 1/C_out + 1/k^2
+
+=== TRANSPOSED CONVOLUTION OUTPUT SIZE ===
+Output size = (input_size - 1) * stride - 2 * padding + kernel_size + output_padding
+
+=== LAYER NORMALISATION ===
+Mean mu and variance sigma^2 are calculated across features for each sample.
+mu_L = (1/d) * sum(x_i)
+sigma_L^2 = (1/d) * sum((x_i - mu_L)^2)
+y = gamma * ((x - mu_L) / sqrt(sigma_L^2 + epsilon)) + beta
+
+=== ATTENTION COMPUTATIONAL COMPLEXITY (FLOPs) ===
+For sequence length n and head dimension d:
+Q * K^T: 2 * n^2 * d
+Softmax(QK^T) * V: 2 * n^2 * d
+Total Attention FLOPs per head: 4 * n^2 * d
+
+=== LANGUAGE MODEL EVALUATION: PERPLEXITY ===
+PP(S) = P(w_1, w_2, ..., w_N)^(-1/N)
+PP(S) = exp(Loss) where Loss is the average cross-entropy per token.
+
+=== GELU ACTIVATION (Gaussian Error Linear Unit) ===
+GELU(x) = x * P(X <= x) where X ~ N(0, 1)
+Approx: GELU(x) = 0.5x(1 + tanh(sqrt(2/pi)(x + 0.044715x^3)))
+Used in BERT, GPT, and modern Transformers.
+

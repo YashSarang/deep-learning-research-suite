@@ -1,0 +1,54 @@
+Deep Learning Model Architectures Reference
+
+=== ALEXNET (2012) ===
+Layers: 5 Convolutional layers, 3 Fully Connected (FC) layers.
+Total Parameters: ~60 million.
+Kernel Sizes: 11x11 (stride 4), 5x5, 3x3.
+Pooling: Max pooling (3x3, stride 2) after layers 1, 2, and 5.
+Innovations: ReLU activation, Dropout (0.5), GPU parallelization, Local Response Normalization (LRN).
+Input Image Size: 227x227x3 (sometimes cited as 224x224).
+
+=== VGG NETWORKS (2014) ===
+Design Philosophy: Unified kernel size of 3x3 and 2x2 max pooling.
+VGG-16 Structure: 13 Conv layers + 3 FC layers. ~138 million parameters.
+VGG-19 Structure: 16 Conv layers + 3 FC layers. ~144 million parameters.
+Receptive Field: Two stacked 3x3 kernels have a 5x5 receptive field; three stacked have 7x7.
+Parameter distribution: Most parameters (>80%) are in the first fully connected layer.
+
+=== GOOGLENET / INCEPTION V1 (2014) ===
+Layers: 22 layers (counting only layers with parameters).
+Total Parameters: ~6.8 million (very efficient compared to AlexNet).
+Inception Module: Parallel 1x1, 3x3, 5x5 convolutions and 3x3 max pooling filters.
+Innovations: 1x1 convolutions for dimensionality reduction (bottlenecks), Global Average Pooling (removes heavy FC layers), Auxiliary Classifiers for gradient flow.
+
+=== RESNET (RESIDUAL NETWORKS, 2015) ===
+Key Innovation: Skip connections (Identity shortcut mapping) $y = F(x, \{W_i\}) + x$.
+ResNet-18/34: Use BasicBlocks (two 3x3 convs).
+ResNet-50/101/152: Use Bottleneck blocks (1x1, 3x3, 1x1 convs).
+ResNet-50 Parameters: ~25.6 million.
+ResNet-50 Structure: Conv1, 4 stages (3, 4, 6, 3 blocks), FC layer.
+Deepening Effect: Solves the degradation problem (accuracy saturating and then degrading as depth increases).
+
+=== MOBILENET V1 (2017) ===
+Innovation: Depthwise Separable Convolutions.
+Efficiency: Standard convolution costs $D_k * D_k * M * N * D_f * D_f$; depthwise separable costs $D_k * D_k * M * D_f * D_f + M * N * D_f * D_f$.
+Reduction: roughly 8 to 9 times less computation than standard convolutions with small accuracy trade-off.
+Width Multiplier (alpha): scales the number of channels per layer.
+
+=== EFFICIENTNET (2019) ===
+Innovation: Compound Scaling.
+Mechanism: Scales depth (d), width (w), and resolution (r) uniformly using a fixed compound coefficient $\phi$.
+Scaling formula: $d = \alpha^\phi, w = \beta^\phi, r = \gamma^\phi$ where $\alpha * \beta^2 * \gamma^2 \approx 2$.
+EfficientNet-B0: Baseline model, ~5.3M parameters.
+
+=== VISION TRANSFORMER (ViT, 2020) ===
+Concept: "An Image is Worth 16x16 Words".
+Mechanism: Embed image patches (e.g., 16x16) as tokens, add CLS token and positional embeddings, pass through Transformer Encoder.
+Advantage: No inductive bias for translation invariance (unlike CNNs); requires very large datasets (ImageNet-21k, JFT-300M) for superior performance.
+Hybrid ViT: CNN extracts feature maps, then Transformer processes patches.
+
+=== UNET (2015) ===
+Task: Semantic Segmentation.
+Structure: Symmetric encoder-decoder with skip connections between corresponding resolutions.
+Skip connections: Concatenate encoder feature maps with decoder feature maps to recover spatial detail.
+Loss function: Weighted cross-entropy (helps segment touching objects).
