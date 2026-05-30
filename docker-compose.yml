@@ -14,7 +14,7 @@ services:
     ports:
       - "8001:8888"
     volumes:
-      - ./cpp-cnn-framework:/workspace
+      - ./tinylearn:/workspace
       - ./data:/data
       - ./models:/models
     environment:
@@ -39,7 +39,7 @@ services:
       - "8002:8888"
       - "5000:5000"  # MLflow
     volumes:
-      - ./transfer-learning-benchmark:/workspace
+      - ./remotesense-transferbench:/workspace
       - ./data/aerial:/data
       - ./models:/models
       - ./results:/results
@@ -64,7 +64,7 @@ services:
     ports:
       - "8003:8888"
     volumes:
-      - ./densenet-iresnet-study:/workspace
+      - ./archbench:/workspace
       - ./data/cifar:/data
       - ./models:/models
     environment:
@@ -87,7 +87,7 @@ services:
     ports:
       - "8004:8888"
     volumes:
-      - ./vlm-mcq-solver:/workspace
+      - ./vlm-examiner:/workspace
       - ./data/scienceqa:/data
       - ./models:/models
       - ${HOME}/.cache/huggingface:/root/.cache/huggingface
@@ -135,12 +135,12 @@ services:
     build:
       context: .
       dockerfile: docker/rnn-dynamics.Dockerfile
-    image: ai-research-suite/rnn-dynamics:latest
+    image: ai-research-suit./rnndynamics:latest
     container_name: rnn-dynamics
     ports:
       - "8006:8888"
     volumes:
-      - ./rnn-dynamics:/workspace
+      - ./rnndynamics:/workspace
       - ./results:/results
     environment:
       - CUDA_VISIBLE_DEVICES=0
@@ -157,12 +157,12 @@ services:
     build:
       context: .
       dockerfile: docker/rag-attention.Dockerfile
-    image: ai-research-suite/rag-attention:latest
+    image: ai-research-suit./ragattention:latest
     container_name: rag-attention
     ports:
       - "8007:8888"
     volumes:
-      - ./rag-attention:/workspace
+      - ./ragattention:/workspace
       - ./data/scifact:/data
       - ./models:/models
       - ${HOME}/.cache/huggingface:/root/.cache/huggingface
