@@ -1,0 +1,200 @@
+version: '3.8'
+
+services:
+  # ====================
+  # Computer Vision Projects
+  # ====================
+  
+  tinylearn:
+    build:
+      context: .
+      dockerfile: docker/tinylearn.Dockerfile
+    image: ai-research-suite/tinylearn:latest
+    container_name: tinylearn
+    ports:
+      - "8001:8888"
+    volumes:
+      - ./cpp-cnn-framework:/workspace
+      - ./data:/data
+      - ./models:/models
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    
+  remotesense-bench:
+    build:
+      context: .
+      dockerfile: docker/remotesense-bench.Dockerfile
+    image: ai-research-suite/remotesense-bench:latest
+    container_name: remotesense-bench
+    ports:
+      - "8002:8888"
+      - "5000:5000"  # MLflow
+    volumes:
+      - ./transfer-learning-benchmark:/workspace
+      - ./data/aerial:/data
+      - ./models:/models
+      - ./results:/results
+    environment:
+      - MLFLOW_TRACKING_URI=http://localhost:5000
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    
+  archbench:
+    build:
+      context: .
+      dockerfile: docker/archbench.Dockerfile
+    image: ai-research-suite/archbench:latest
+    container_name: archbench
+    ports:
+      - "8003:8888"
+    volumes:
+      - ./densenet-iresnet-study:/workspace
+      - ./data/cifar:/data
+      - ./models:/models
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    
+  vlm-examiner:
+    build:
+      context: .
+      dockerfile: docker/vlm-examiner.Dockerfile
+    image: ai-research-suite/vlm-examiner:latest
+    container_name: vlm-examiner
+    ports:
+      - "8004:8888"
+    volumes:
+      - ./vlm-mcq-solver:/workspace
+      - ./data/scienceqa:/data
+      - ./models:/models
+      - ${HOME}/.cache/huggingface:/root/.cache/huggingface
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - TRANSFORMERS_CACHE=/models/transformers
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    shm_size: '8gb'  # For CLIP/LLaVA
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+
+  # ====================
+  # NLP Projects
+  # ====================
+  
+  embedlearn:
+    build:
+      context: .
+      dockerfile: docker/embedlearn.Dockerfile
+    image: ai-research-suite/embedlearn:latest
+    container_name: embedlearn
+    ports:
+      - "8005:8888"
+    volumes:
+      - ./embedlearn:/workspace
+      - ./data/cc_news:/data
+      - ./models:/models
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    
+  rnn-dynamics:
+    build:
+      context: .
+      dockerfile: docker/rnn-dynamics.Dockerfile
+    image: ai-research-suite/rnn-dynamics:latest
+    container_name: rnn-dynamics
+    ports:
+      - "8006:8888"
+    volumes:
+      - ./rnn-dynamics:/workspace
+      - ./results:/results
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+    
+  rag-attention:
+    build:
+      context: .
+      dockerfile: docker/rag-attention.Dockerfile
+    image: ai-research-suite/rag-attention:latest
+    container_name: rag-attention
+    ports:
+      - "8007:8888"
+    volumes:
+      - ./rag-attention:/workspace
+      - ./data/scifact:/data
+      - ./models:/models
+      - ${HOME}/.cache/huggingface:/root/.cache/huggingface
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
+      - TRANSFORMERS_CACHE=/models/transformers
+      - HF_HOME=/models/huggingface
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    shm_size: '16gb'  # For LLaMA 3.2
+    command: jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root
+
+# ====================
+# Shared Volumes
+# ====================
+volumes:
+  models:
+    driver: local
+  data:
+    driver: local
+  results:
+    driver: local
+
+# ====================
+# Networks
+# ====================
+networks:
+  default:
+    name: ai-research-net
+    driver: bridge
